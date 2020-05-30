@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:market/Widgets/Categories.dart';
+import 'package:market/Widgets/Featured.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -86,86 +87,7 @@ class _HomeState extends State<Home> {
               child: Text("Featured",
                   style: TextStyle(fontSize: 18, color: Colors.grey)),
             ),
-            Container(
-                height: 250,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 2,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Container(
-                        height: 250,
-                        width: 200,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey[300],
-                                  offset: Offset(1, 1),
-                                  blurRadius: 3),
-                            ],
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Column(
-                          children: <Widget>[
-                            Image.asset(
-                              "images/watermelons.jpg",
-                              height: 150,
-                              width: 200,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("food test"),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.favorite,
-                                    size: 18,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Text("4.3",
-                                      style: TextStyle(color: Colors.grey)),
-                                ),
-                                SizedBox(width: 2),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.black,
-                                  size: 16,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.black,
-                                  size: 16,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.black,
-                                  size: 16,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.grey,
-                                  size: 16,
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ))
+            Featured()
           ],
         ),
       ),
