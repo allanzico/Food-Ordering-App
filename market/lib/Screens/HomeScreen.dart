@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market/Widgets/Categories.dart';
 import 'package:market/Widgets/Featured.dart';
+import 'package:market/Widgets/Popular.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -87,7 +88,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text("Featured",
                   style: TextStyle(fontSize: 18, color: Colors.grey)),
             ),
-            Featured()
+            Featured(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Popular",
+                  style: TextStyle(fontSize: 18, color: Colors.grey)),
+            ),
+            PopularProducts()
           ],
         ),
       ),
