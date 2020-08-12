@@ -54,6 +54,7 @@ class Featured extends StatelessWidget {
                       "images/${productList[index].image}",
                       height: 150,
                       width: 200,
+                      // alignment: Alignment.topCenter,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,7 +71,11 @@ class Featured extends StatelessWidget {
                                   size: 18,
                                   color: Colors.black,
                                 )
-                              : Icon(Icons.favorite_border),
+                              : Icon(
+                                  Icons.favorite_border,
+                                  size: 18,
+                                  color: Colors.black,
+                                ),
                         )
                       ],
                     ),

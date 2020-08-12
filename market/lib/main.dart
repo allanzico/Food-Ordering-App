@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:market/Screens/Home.dart';
+import 'package:market/Screens/MainScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,8 +9,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.black,
+      ),
       title: 'Akatale',
-      home: Home(),
+      home: MainScreen(),
     );
   }
 }

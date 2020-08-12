@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:market/Widgets/Categories.dart';
 import 'package:market/Widgets/Featured.dart';
 
-class Home extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
