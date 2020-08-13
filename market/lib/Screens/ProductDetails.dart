@@ -101,11 +101,44 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   Text(
                     widget.product.price.toString(),
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                   ),
                 ],
               ),
             ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.remove,
+                      size: 20,
+                    ),
+                    onPressed: null),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                        child: Text("Add to bag",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ))),
+                  ),
+                ),
+                IconButton(
+                    icon: Icon(Icons.add, size: 20, color: Colors.black),
+                    onPressed: null),
+              ],
+            )
           ],
         ),
       ),

@@ -36,21 +36,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black),
-          title: Text(
-            currentTabIndex == 1
-                ? "Orders"
-                : currentTabIndex == 2
-                    ? "Profile"
-                    : currentTabIndex == 3 ? "Profile" : "",
-            style: TextStyle(
-                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-        ),
         bottomNavigationBar: BottomNavigationBar(
             onTap: (int index) {
               //Change pages
