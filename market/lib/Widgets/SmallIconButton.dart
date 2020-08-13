@@ -9,8 +9,9 @@ class SmallIconButton extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(color: Colors.grey, offset: Offset(1, 1), blurRadius: 5),
+          ], color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: Padding(
             padding: EdgeInsets.all(4),
             child: Icon(
