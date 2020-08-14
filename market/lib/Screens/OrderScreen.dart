@@ -64,6 +64,8 @@ class _OrderScreenState extends State<OrderScreen> {
       body: ListView(
         children: [
           OrderItem(),
+          OrderItem(),
+          OrderItem(),
         ],
       ),
     );
