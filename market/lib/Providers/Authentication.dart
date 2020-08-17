@@ -56,7 +56,8 @@ class AuthProvider with ChangeNotifier {
         Map<String, dynamic> userData = {
           "email": email.text,
           "name": name.text,
-          "id": user.user.uid
+          "id": user.user.uid,
+          "favorites": [],
         };
         _userServices.createUser(userData);
       });
@@ -91,7 +92,7 @@ class AuthProvider with ChangeNotifier {
 //Listen for auth state
   Future<void> _onStateChanged(FirebaseUser firebaseUser) async {
     if (user == null) {
-      _status = Status.Uninitialized;
+      _status = Status.UnAuthenticated;
     } else {
       _user = firebaseUser;
       _status = Status.Authenticated;

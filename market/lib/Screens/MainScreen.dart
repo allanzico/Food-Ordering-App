@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:market/Screens/Favorites.dart';
 import 'HomeScreen.dart';
 import 'OrderScreen.dart';
 import 'ProfileScreen.dart';
@@ -15,6 +16,7 @@ class _MainScreenState extends State<MainScreen> {
   HomeScreen homeScreen;
   OrderScreen orderScreen;
   ProfileScreen profileScreen;
+  FavoritesScreen favoritesScreen;
 
   //List of pages
   List<Widget> pages;
@@ -27,8 +29,9 @@ class _MainScreenState extends State<MainScreen> {
     homeScreen = HomeScreen();
     orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
+    favoritesScreen = FavoritesScreen();
 
-    pages = [homeScreen, orderScreen, profileScreen];
+    pages = [homeScreen, orderScreen, favoritesScreen, profileScreen];
     currentPage = homeScreen;
   }
 
@@ -69,6 +72,16 @@ class _MainScreenState extends State<MainScreen> {
                     color: Colors.black,
                   ),
                   title: Text("Orders")),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    EvaIcons.heartOutline,
+                    color: Colors.black,
+                  ),
+                  activeIcon: Icon(
+                    EvaIcons.heart,
+                    color: Colors.black,
+                  ),
+                  title: Text("Favorites")),
               BottomNavigationBarItem(
                   icon: Icon(
                     EvaIcons.personOutline,
