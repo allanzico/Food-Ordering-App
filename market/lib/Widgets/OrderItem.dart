@@ -8,13 +8,6 @@ class OrderItem extends StatefulWidget {
 }
 
 class _OrderItemState extends State<OrderItem> {
-  Product product = Product(
-      name: "Banana",
-      price: 1.99,
-      rating: 2.7,
-      vendor: "Nakasero",
-      whishList: false,
-      image: "banana.jpg");
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,7 +25,7 @@ class _OrderItemState extends State<OrderItem> {
         child: Row(
           children: [
             Image.asset(
-              "images/${product.image}",
+              "images/apples.png",
               height: 120,
               width: 120,
               fit: BoxFit.cover,
@@ -45,12 +38,12 @@ class _OrderItemState extends State<OrderItem> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    product.name,
+                    "name",
                     style: TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  Text(product.price.toString(),
+                  Text("price",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 ],

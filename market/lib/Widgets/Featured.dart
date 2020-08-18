@@ -3,29 +3,7 @@ import 'package:market/Helpers/ScreenNavigation.dart';
 import 'package:market/Models/Product.dart';
 import 'package:market/Screens/ProductDetails.dart';
 
-List<Product> productList = [
-  Product(
-      name: "Watermelon",
-      price: 2.99,
-      rating: 4,
-      vendor: "Nakasero",
-      whishList: true,
-      image: "watermelons.jpg"),
-  Product(
-      name: "Tilapia",
-      price: 4.99,
-      rating: 3,
-      vendor: "Nakasero",
-      whishList: false,
-      image: "tilapia.jpg"),
-  Product(
-      name: "Banana",
-      price: 1.99,
-      rating: 2.7,
-      vendor: "Nakasero",
-      whishList: false,
-      image: "banana.jpg")
-];
+List<ProductModel> productList = [];
 
 class Featured extends StatelessWidget {
   @override
@@ -75,7 +53,7 @@ class Featured extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: productList[index].whishList
+                            child: null
                                 ? Icon(
                                     Icons.favorite,
                                     size: 18,

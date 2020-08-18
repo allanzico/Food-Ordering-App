@@ -4,24 +4,28 @@ class UserModel {
   static const NAME = "name";
   static const EMAIL = "email";
   static const ID = "id";
-  static const FAVORITES = "favorites";
+  // static const FAVORITES = "favorites";
+  static const STRIPE_ID = "stripeId";
 
 //Private variables
   String _name;
   String _email;
   String _id;
-  List _favorites;
+  String _stripeId;
+  // List _favorites;
 
   //getters
   String get name => _name;
   String get email => _email;
   String get id => _id;
-  List get favorites => _favorites;
+  String get stripeId => _stripeId;
+  // List get favorites => _favorites;
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
     _name = snapshot.data[NAME];
     _email = snapshot.data[EMAIL];
     _id = snapshot.data[ID];
-    _favorites = snapshot.data[FAVORITES] ?? [];
+    _stripeId = snapshot.data[STRIPE_ID];
+    // _favorites = snapshot.data[FAVORITES] ?? [];
   }
 }

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market/Models/Category.dart';
 
-List<Category> categoriesList = [
-  Category(name: "vegetables", image: "apples.png"),
-  Category(name: "steak", image: "bananas.png"),
-  Category(name: "fish", image: "bone.png"),
-  Category(name: "fruits", image: "fruits.png")
-];
+List<CategoryModel> categoriesList = [];
 
 class Categories extends StatelessWidget {
   @override

@@ -5,7 +5,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:market/Widgets/SmallIconButton.dart';
 
 class ProductDetails extends StatefulWidget {
-  final Product product;
+  final ProductModel product;
 
   const ProductDetails({Key key, @required this.product}) : super(key: key);
   @override
