@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:market/Providers/Authentication.dart';
+import 'package:market/Providers/CategoryProvider.dart';
 import 'package:market/Screens/MainScreen.dart';
 import 'package:market/Screens/SigninScreen.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,8 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: AuthProvider.initialize())
+        ChangeNotifierProvider.value(value: AuthProvider.initialize()),
+        ChangeNotifierProvider.value(value: CategoryProvider.initialize())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

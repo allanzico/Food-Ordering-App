@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:market/Providers/Authentication.dart';
 import 'package:market/Widgets/Categories.dart';
 import 'package:market/Widgets/Featured.dart';
 import 'package:market/Widgets/Popular.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

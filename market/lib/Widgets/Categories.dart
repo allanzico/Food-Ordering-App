@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:market/Models/Category.dart';
+import 'package:market/Providers/CategoryProvider.dart';
+import 'package:provider/provider.dart';
 
 List<CategoryModel> categoriesList = [];
 
 class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final categoryProvider = Provider.of<CategoryProvider>(context);
     return Container(
       height: 75,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: categoriesList.length,
+        itemCount: categoryProvider.categories.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             margin: EdgeInsets.only(right: 5.0),
@@ -20,8 +23,8 @@ class Categories extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Image(
-                      image:
-                          AssetImage("images/${categoriesList[index].image}"),
+                      image: NetworkImage(
+                          categoryProvider.categories[index].image),
                       height: 65,
                       width: 65,
                       alignment: Alignment.centerLeft,
@@ -33,7 +36,7 @@ class Categories extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          categoriesList[index].name,
+                          categoryProvider.categories[index].name,
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         )
