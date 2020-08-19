@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:market/Widgets/SmallIconButton.dart';
 
-class PopularProducts extends StatefulWidget {
+class PopularProductsWidget extends StatefulWidget {
   @override
-  _PopularProductsState createState() => _PopularProductsState();
+  _PopularProductsWidgetState createState() => _PopularProductsWidgetState();
 }
 
-class _PopularProductsState extends State<PopularProducts> {
+class _PopularProductsWidgetState extends State<PopularProductsWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,7 +16,7 @@ class _PopularProductsState extends State<PopularProducts> {
           Container(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: Image.asset("images/med.jpg"),
+              child: Image.asset("images/shish-kebab.png"),
             ),
           ),
           Padding(

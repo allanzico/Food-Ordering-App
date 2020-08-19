@@ -7,12 +7,12 @@ class CategoryService {
 
 //Fetch categories
   Future<List<CategoryModel>> getCategories() async {
+    List<CategoryModel> categories = [];
     _firestore.collection(collection).getDocuments().then((result) {
-      List<CategoryModel> categories = [];
       for (DocumentSnapshot category in result.documents) {
         categories.add(CategoryModel.fromSnapshot(category));
       }
-      return categories;
     });
+    return categories;
   }
 }

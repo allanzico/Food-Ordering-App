@@ -5,7 +5,7 @@ import 'package:market/Screens/ProductDetails.dart';
 
 List<ProductModel> productList = [];
 
-class Featured extends StatelessWidget {
+class FeaturedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

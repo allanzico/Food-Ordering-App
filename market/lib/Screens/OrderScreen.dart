@@ -63,9 +63,9 @@ class _OrderScreenState extends State<OrderScreen> {
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          OrderItem(),
-          OrderItem(),
-          OrderItem(),
+          OrderItemWidget(),
+          OrderItemWidget(),
+          OrderItemWidget(),
         ],
       ),
     );

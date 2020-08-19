@@ -2,12 +2,12 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:market/Models/Product.dart';
 
-class OrderItem extends StatefulWidget {
+class OrderItemWidget extends StatefulWidget {
   @override
-  _OrderItemState createState() => _OrderItemState();
+  _OrderItemWidgetState createState() => _OrderItemWidgetState();
 }
 
-class _OrderItemState extends State<OrderItem> {
+class _OrderItemWidgetState extends State<OrderItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
