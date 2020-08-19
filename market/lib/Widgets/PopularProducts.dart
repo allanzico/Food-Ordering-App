@@ -16,7 +16,7 @@ class _PopularProductsWidgetState extends State<PopularProductsWidget> {
           Container(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: Image.asset("images/shish-kebab.png"),
+              child: Image.asset("images/shish-kebab.jpg"),
             ),
           ),
           Padding(

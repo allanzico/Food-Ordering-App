@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:market/Providers/Authentication.dart';
-import 'package:market/Providers/CategoryProvider.dart';
+import 'package:market/Providers/MarketProvider.dart';
 import 'package:market/Widgets/Categories.dart';
 import 'package:market/Widgets/Featured.dart';
-import 'package:market/Widgets/Popular.dart';
+import 'package:market/Widgets/PopularMarkets.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final categoryProvider = Provider.of<CategoryProvider>(context);
+    final marketProvider = Provider.of<MarketProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -86,29 +85,48 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 5,
             ),
-            Container(
-                height: 100,
-                margin: EdgeInsets.only(right: 5.0),
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categoryProvider.categories.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CategoryWidget(
-                        category: categoryProvider.categories[index],
-                      );
-                    })),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Featured",
-                  style: TextStyle(fontSize: 18, color: Colors.grey)),
+            CategoriesWidget(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Featured",
+                      style: TextStyle(fontSize: 18, color: Colors.grey)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("See All",
+                      style: TextStyle(fontSize: 18, color: Colors.grey)),
+                ),
+              ],
             ),
             FeaturedWidget(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Popular",
-                  style: TextStyle(fontSize: 18, color: Colors.grey)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Popular Markets",
+                      style: TextStyle(fontSize: 18, color: Colors.grey)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("See All",
+                      style: TextStyle(fontSize: 18, color: Colors.grey)),
+                ),
+              ],
             ),
-            PopularProductsWidget()
+            Column(
+              children: marketProvider.markets.map((item) {
+                return GestureDetector(
+                  onTap: null,
+                  child: PopularMarketsWidget(
+                    market: item,
+                  ),
+                );
+              }).toList(),
+            ),
           ],
         ),
       ),

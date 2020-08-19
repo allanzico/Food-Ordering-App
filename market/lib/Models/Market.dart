@@ -23,8 +23,8 @@ class MarketModel {
   double get averagePrice => _averagePrice;
   String get id => _id;
   String get image => _image;
-  double get status => _rating;
-  int get numberOfRates => _numberOfRatings;
+  double get rating => _rating;
+  int get numberOfRatings => _numberOfRatings;
   bool get price => _isPopular;
 
   MarketModel.fromSnapshot(DocumentSnapshot snapshot) {

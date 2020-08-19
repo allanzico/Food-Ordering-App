@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:market/Models/Category.dart';
 import 'package:market/Providers/CategoryProvider.dart';
+import 'package:market/Widgets/Loading.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 List<CategoryModel> categoriesList = [];
 
-class Categories extends StatelessWidget {
+class CategoriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryProvider = Provider.of<CategoryProvider>(context);
@@ -22,13 +24,26 @@ class Categories extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: <Widget>[
-                    Image(
-                      image: NetworkImage(
-                          categoryProvider.categories[index].image),
-                      height: 65,
-                      width: 65,
-                      alignment: Alignment.centerLeft,
+                    Stack(
+                      children: [
+                        // Positioned(
+                        //     child: Align(
+                        //   alignment: Alignment.center,
+                        //   child: Loading(),
+                        // )),
+                        FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: categoryProvider.categories[index].image),
+                      ],
                     ),
+
+                    // Image(
+                    //   image: NetworkImage(
+                    //       categoryProvider.categories[index].image),
+                    //   height: 65,
+                    //   width: 65,
+                    //   alignment: Alignment.centerLeft,
+                    // ),
                     SizedBox(
                       width: 5,
                     ),

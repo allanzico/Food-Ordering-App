@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:market/Providers/Authentication.dart';
 import 'package:market/Providers/CategoryProvider.dart';
+import 'package:market/Providers/MarketProvider.dart';
+import 'package:market/Providers/ProductProvider.dart';
 import 'package:market/Screens/MainScreen.dart';
 import 'package:market/Screens/SigninScreen.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +14,9 @@ void main() {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: AuthProvider.initialize()),
-        ChangeNotifierProvider.value(value: CategoryProvider.initialize())
+        ChangeNotifierProvider.value(value: CategoryProvider.initialize()),
+        ChangeNotifierProvider.value(value: MarketProvider.initialize()),
+        ChangeNotifierProvider.value(value: ProductProvider.initialize())
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

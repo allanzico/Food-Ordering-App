@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:market/Helpers/ScreenNavigation.dart';
-import 'package:market/Models/Product.dart';
-import 'package:market/Screens/ProductDetails.dart';
 
-List<ProductModel> productList = [];
+import 'package:market/Providers/ProductProvider.dart';
+import 'package:market/Screens/ProductDetails.dart';
+import 'package:provider/provider.dart';
 
 class FeaturedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
     return Container(
         height: 250,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: productList.length,
+          itemCount: productProvider.products.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: EdgeInsets.fromLTRB(12, 12, 12, 16),
@@ -21,7 +22,7 @@ class FeaturedWidget extends StatelessWidget {
                   changeScreen(
                       context,
                       ProductDetails(
-                        product: productList[index],
+                        product: productProvider.products[index],
                       ));
                 },
                 child: Container(
@@ -39,7 +40,7 @@ class FeaturedWidget extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Image.asset(
-                        "images/${productList[index].image}",
+                        productProvider.products[index].image,
                         height: 150,
                         width: 200,
                         // alignment: Alignment.topCenter,
@@ -49,11 +50,11 @@ class FeaturedWidget extends StatelessWidget {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(productList[index].name),
+                            child: Text(productProvider.products[index].name),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: null
+                            child: true
                                 ? Icon(
                                     Icons.favorite,
                                     size: 18,
@@ -75,7 +76,8 @@ class FeaturedWidget extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Text(
-                                    productList[index].rating.toString(),
+                                    productProvider.products[index].rating
+                                        .toString(),
                                     style: TextStyle(color: Colors.grey)),
                               ),
                               SizedBox(width: 2),
@@ -103,7 +105,8 @@ class FeaturedWidget extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0),
-                            child: Text("\$${productList[index].price}",
+                            child: Text(
+                                "\$${productProvider.products[index].price}",
                                 style: TextStyle(fontWeight: FontWeight.bold)),
                           )
                         ],
