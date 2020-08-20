@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:market/Helpers/ScreenNavigation.dart';
+import 'package:market/Providers/CategoryProvider.dart';
 import 'package:market/Providers/MarketProvider.dart';
+import 'package:market/Providers/ProductProvider.dart';
+import 'package:market/Screens/CategoryScreen.dart';
+import 'package:market/Screens/MarketScreen.dart';
 import 'package:market/Widgets/Categories.dart';
 import 'package:market/Widgets/Featured.dart';
 import 'package:market/Widgets/PopularMarkets.dart';
@@ -14,6 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final marketProvider = Provider.of<MarketProvider>(context);
+    final categoryProvider = Provider.of<CategoryProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -85,7 +92,29 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 5,
             ),
-            CategoriesWidget(),
+            Container(
+              height: 75,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categoryProvider.categories.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () async {
+                      await productProvider.loadProductsByCategory(
+                          categoryName:
+                              categoryProvider.categories[index].name);
+                      changeScreen(
+                          context,
+                          CategoryScreen(
+                              categoryModel:
+                                  categoryProvider.categories[index]));
+                    },
+                    child: CategoriesWidget(
+                        category: categoryProvider.categories[index]),
+                  );
+                },
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -120,7 +149,15 @@ class _HomeScreenState extends State<HomeScreen> {
             Column(
               children: marketProvider.markets.map((item) {
                 return GestureDetector(
-                  onTap: null,
+                  onTap: () async {
+                    await productProvider.loadProductsByMarket(
+                        marketId: item.id);
+                    changeScreen(
+                        context,
+                        MarketScreen(
+                          marketModel: item,
+                        ));
+                  },
                   child: PopularMarketsWidget(
                     market: item,
                   ),
