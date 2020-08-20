@@ -39,11 +39,11 @@ class FeaturedWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5)),
                   child: Column(
                     children: <Widget>[
-                      Image.asset(
+                      Image.network(
                         productProvider.products[index].image,
                         height: 150,
                         width: 200,
-                        // alignment: Alignment.topCenter,
+                        alignment: Alignment.topCenter,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

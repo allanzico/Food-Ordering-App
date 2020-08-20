@@ -15,4 +15,34 @@ class ProductService {
     });
     return products;
   }
+
+  //Fetch Products by category
+  Future<List<ProductModel>> getProductsByCategory({String category}) async {
+    List<ProductModel> products = [];
+    _firestore
+        .collection(collection)
+        .where("category", isEqualTo: category)
+        .getDocuments()
+        .then((result) {
+      for (DocumentSnapshot product in result.documents) {
+        products.add(ProductModel.fromSnapshot(product));
+      }
+    });
+    return products;
+  }
+
+  //Fetch Products by Market
+  Future<List<ProductModel>> getProductsByMarket({String marketId}) async {
+    List<ProductModel> products = [];
+    _firestore
+        .collection(collection)
+        .where("marketId", isEqualTo: marketId)
+        .getDocuments()
+        .then((result) {
+      for (DocumentSnapshot product in result.documents) {
+        products.add(ProductModel.fromSnapshot(product));
+      }
+    });
+    return products;
+  }
 }
