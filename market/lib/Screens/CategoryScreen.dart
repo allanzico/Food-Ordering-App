@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:market/Helpers/ScreenNavigation.dart';
 import 'package:market/Models/Category.dart';
 import 'package:market/Providers/ProductProvider.dart';
-import 'package:market/Widgets/PopularMarkets.dart';
-import 'package:market/Widgets/PopularProducts.dart';
+
+import 'package:market/Widgets/ProductsWidget.dart';
 import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -24,7 +24,7 @@ class CategoryScreen extends StatelessWidget {
                   onTap: () {
                     // changeScreen(context, widget);
                   },
-                  child: PopularProductsWidget());
+                  child: ProductsWidget());
             }).toList(),
           ),
         ],

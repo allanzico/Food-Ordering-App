@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:market/Models/Market.dart';
 import 'package:market/Providers/ProductProvider.dart';
-import 'package:market/Widgets/PopularMarkets.dart';
-import 'package:market/Widgets/PopularProducts.dart';
+
+import 'package:market/Widgets/ProductsWidget.dart';
 import 'package:provider/provider.dart';
 
 class MarketScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class MarketScreen extends StatelessWidget {
                   onTap: () {
                     // changeScreen(context, widget);
                   },
-                  child: PopularProductsWidget());
+                  child: ProductsWidget());
             }).toList(),
           ),
         ],

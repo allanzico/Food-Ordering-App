@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:market/Widgets/SmallIconButton.dart';
+import 'package:market/Models/Market.dart';
+import 'package:market/Providers/CategoryProvider.dart';
+import 'package:market/Providers/MarketProvider.dart';
+import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
-class PopularProductsWidget extends StatefulWidget {
-  @override
-  _PopularProductsWidgetState createState() => _PopularProductsWidgetState();
-}
+import 'Loading.dart';
+import 'SmallIconButton.dart';
 
-class _PopularProductsWidgetState extends State<PopularProductsWidget> {
+class MarketsWidget extends StatelessWidget {
+  final MarketModel market;
+
+  const MarketsWidget({Key key, this.market}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,7 +21,17 @@ class _PopularProductsWidgetState extends State<PopularProductsWidget> {
           Container(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: Image.asset("images/shish-kebab.jpg"),
+              child: Stack(
+                children: [
+                  // Positioned(
+                  //     child: Align(
+                  //   alignment: Alignment.center,
+                  //   child: Loading(),
+                  // )),
+                  FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage, image: market.image),
+                ],
+              ),
             ),
           ),
           Padding(
@@ -44,7 +59,7 @@ class _PopularProductsWidgetState extends State<PopularProductsWidget> {
                             size: 20,
                           ),
                         ),
-                        Text("4.5")
+                        Text(market.rating.toString())
                       ],
                     ),
                   ),
@@ -77,19 +92,13 @@ class _PopularProductsWidgetState extends State<PopularProductsWidget> {
                     Row(
                       children: <Widget>[
                         Text(
-                          "Matooke",
+                          market.name,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                               letterSpacing: 3,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          " (per kg)",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        )
                       ],
                     ),
                   ],
@@ -97,7 +106,7 @@ class _PopularProductsWidgetState extends State<PopularProductsWidget> {
                 Column(
                   children: <Widget>[
                     Text(
-                      "UGX 20000",
+                      market.averagePrice.toString(),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
