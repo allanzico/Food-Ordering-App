@@ -90,9 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           textInputAction: TextInputAction.search,
                           onSubmitted: (pattern) async {
                             appProvider.changeLoadingState();
-                            await productProvider.filterProducts(
-                                productName: pattern.toLowerCase());
-                            changeScreen(context, ProductSearchScreen());
+                            if (appProvider.searchBy == SearchBy.PRODUCTS) {
+                              await productProvider.filterProducts(
+                                  productName: pattern.toLowerCase());
+                              changeScreen(context, ProductSearchScreen());
+                            } else {}
+
                             appProvider.changeLoadingState();
                           },
                           decoration: InputDecoration(

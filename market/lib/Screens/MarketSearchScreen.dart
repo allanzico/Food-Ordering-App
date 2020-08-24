@@ -1,15 +1,19 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:market/Helpers/ScreenNavigation.dart';
+import 'package:market/Providers/MarketProvider.dart';
 import 'package:market/Providers/ProductProvider.dart';
-import 'package:market/Screens/ProductDetails.dart';
+import 'package:market/Screens/MarketScreen.dart';
+
+import 'package:market/Widgets/MarketsWidget.dart';
 import 'package:market/Widgets/NoSearchWidget.dart';
-import 'package:market/Widgets/ProductsWidget.dart';
+
 import 'package:provider/provider.dart';
 
-class ProductSearchScreen extends StatelessWidget {
+class MarketSearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final marketProvider = Provider.of<MarketProvider>(context);
     final productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -22,7 +26,7 @@ class ProductSearchScreen extends StatelessWidget {
               Navigator.pop(context);
             }),
         title: Text(
-          "Products",
+          "Markets",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -31,20 +35,23 @@ class ProductSearchScreen extends StatelessWidget {
           IconButton(icon: Icon(EvaIcons.shoppingBag), onPressed: null)
         ],
       ),
-      body: productProvider.filteredProducts.length < 1
+      body: marketProvider.filteredMarkets.length < 1
           ? NoSearchWidget()
           : ListView.builder(
-              itemCount: productProvider.filteredProducts.length,
+              itemCount: marketProvider.filteredMarkets.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    await productProvider.loadProductsByMarket(
+                        marketId: marketProvider.filteredMarkets[index].id);
                     changeScreen(
                         context,
-                        ProductDetails(
-                            product: productProvider.filteredProducts[index]));
+                        MarketScreen(
+                          marketModel: marketProvider.filteredMarkets[index],
+                        ));
                   },
-                  child: ProductWidget(
-                    product: productProvider.filteredProducts[index],
+                  child: MarketsWidget(
+                    market: marketProvider.filteredMarkets[index],
                   ),
                 );
               }),
