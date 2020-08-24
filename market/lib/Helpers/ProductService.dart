@@ -45,4 +45,23 @@ class ProductService {
     });
     return products;
   }
+
+  //Filter products
+
+  Future<List<ProductModel>> filterProducts({String productName}) {
+    List<ProductModel> products = [];
+    String toLowerCase = productName.toLowerCase();
+    return _firestore
+        .collection(collection)
+        .orderBy("name")
+        .startAt([toLowerCase])
+        .endAt([toLowerCase + '\uf8ff'])
+        .getDocuments()
+        .then((result) {
+          for (DocumentSnapshot product in result.documents) {
+            products.add(ProductModel.fromSnapshot(product));
+          }
+          return products;
+        });
+  }
 }

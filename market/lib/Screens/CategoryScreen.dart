@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:market/Helpers/ScreenNavigation.dart';
 import 'package:market/Models/Category.dart';
 import 'package:market/Providers/ProductProvider.dart';
+import 'package:market/Screens/ProductDetails.dart';
 
 import 'package:market/Widgets/ProductsWidget.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +23,11 @@ class CategoryScreen extends StatelessWidget {
             children: productProvider.productsByCategory.map((item) {
               return GestureDetector(
                   onTap: () {
-                    // changeScreen(context, widget);
+                    changeScreen(context, ProductDetails(product: item));
                   },
-                  child: ProductsWidget());
+                  child: ProductWidget(
+                    product: item,
+                  ));
             }).toList(),
           ),
         ],

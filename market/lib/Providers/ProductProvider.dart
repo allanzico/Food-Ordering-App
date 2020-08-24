@@ -7,9 +7,11 @@ class ProductProvider with ChangeNotifier {
   List<ProductModel> products = [];
   List<ProductModel> productsByCategory = [];
   List<ProductModel> productsByMarket = [];
+  List<ProductModel> filteredProducts = [];
 
   ProductProvider.initialize() {
     _loadProducts();
+    filterProducts(productName: "m");
   }
 
   //Private method Load products to List
@@ -29,6 +31,14 @@ class ProductProvider with ChangeNotifier {
   Future loadProductsByMarket({String marketId}) async {
     productsByMarket =
         await _productService.getProductsByMarket(marketId: marketId);
+    notifyListeners();
+  }
+
+  //Filter Products
+  Future filterProducts({String productName}) async {
+    filteredProducts =
+        await _productService.filterProducts(productName: productName);
+
     notifyListeners();
   }
 }
