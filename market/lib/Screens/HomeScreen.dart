@@ -6,6 +6,7 @@ import 'package:market/Providers/MarketProvider.dart';
 import 'package:market/Providers/ProductProvider.dart';
 import 'package:market/Screens/CategoryScreen.dart';
 import 'package:market/Screens/MarketScreen.dart';
+import 'package:market/Screens/ProductSearch.dart';
 import 'package:market/Widgets/Categories.dart';
 import 'package:market/Widgets/Featured.dart';
 import 'package:market/Widgets/Loading.dart';
@@ -86,6 +87,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.black,
                         ),
                         title: TextField(
+                          textInputAction: TextInputAction.search,
+                          onSubmitted: (pattern) async {
+                            appProvider.changeLoadingState();
+                            await productProvider.filterProducts(
+                                productName: pattern.toLowerCase());
+                            changeScreen(context, ProductSearchScreen());
+                            appProvider.changeLoadingState();
+                          },
                           decoration: InputDecoration(
                               hintText: "Find Groceries in Markets",
                               border: InputBorder.none),

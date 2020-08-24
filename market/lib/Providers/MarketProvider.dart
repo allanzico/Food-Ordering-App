@@ -12,7 +12,7 @@ class MarketProvider with ChangeNotifier {
 
   MarketProvider.initialize() {
     _loadMarkets();
-    filterMarkets(marketName: "n");
+    filterMarkets();
   }
 
   //Load Markets to List
