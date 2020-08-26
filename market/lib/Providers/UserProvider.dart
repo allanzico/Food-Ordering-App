@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:market/Helpers/UserService.dart';
+import 'package:market/Models/Product.dart';
 import 'package:market/Models/User.dart';
+import 'package:uuid/uuid.dart';
 
 enum Status { Uninitialized, Authenticated, UnAuthenticated, Authenticating }
 
-class AuthProvider with ChangeNotifier {
+class UserProvider with ChangeNotifier {
   FirebaseAuth _auth;
   FirebaseUser _user;
   Status _status = Status.Uninitialized;
@@ -27,7 +29,7 @@ class AuthProvider with ChangeNotifier {
   TextEditingController name = TextEditingController();
 
 //constructor
-  AuthProvider.initialize() : _auth = FirebaseAuth.instance {
+  UserProvider.initialize() : _auth = FirebaseAuth.instance {
     _auth.onAuthStateChanged.listen(_onStateChanged);
   }
 
@@ -72,6 +74,21 @@ class AuthProvider with ChangeNotifier {
     _auth.signOut();
     _status = Status.UnAuthenticated;
     notifyListeners();
+  }
+
+  //Add items to cart
+  void addToCart({ProductModel product, int quantity}) {
+    var uuid = Uuid();
+    String cartItemId = uuid.v4();
+
+    Map values = {
+      "id": cartItemId,
+      "name": product.name,
+      "image": product.image,
+      "productId": product.id,
+      "amount": product.price,
+      "quantity": quantity
+    };
   }
 
 //Clear text fields

@@ -24,12 +24,21 @@ class OrderItemModel {
   int get status => _quantity;
   int get amount => _amount;
 
-  OrderItemModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _id = snapshot.data[ID];
-    _name = snapshot.data[NAME];
-    _productId = snapshot.data[PRODUCT_ID];
-    _image = snapshot.data[IMAGE];
-    _amount = snapshot.data[AMOUNT];
-    _quantity = snapshot.data[QUANTITY];
+  OrderItemModel.fromMap(Map data) {
+    _id = data[ID];
+    _name = data[NAME];
+    _productId = data[PRODUCT_ID];
+    _image = data[IMAGE];
+    _amount = data[AMOUNT];
+    _quantity = data[QUANTITY];
   }
+
+  Map toMap() => {
+        ID: _id,
+        NAME: _name,
+        IMAGE: _image,
+        PRODUCT_ID: _productId,
+        AMOUNT: _amount,
+        QUANTITY: _quantity
+      };
 }

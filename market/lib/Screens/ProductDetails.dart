@@ -1,8 +1,9 @@
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:market/Models/Product.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:market/Widgets/SmallIconButton.dart';
+import 'package:market/Providers/UserProvider.dart';
+
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   final ProductModel product;
@@ -13,8 +14,10 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  int quantity = 1;
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -83,24 +86,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ],
               ),
-
-              // child: Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     Text(
-              //       widget.product.name,
-              //       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              //     ),
-              //     Text(
-              //       widget.product.price.toString(),
-              //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-              //     ),
-              //   ],
-              // ),
             ),
             SizedBox(
-              height: 5,
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,9 +101,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                           EvaIcons.plusCircleOutline,
                           size: 32,
                         ),
-                        onPressed: null),
+                        onPressed: () {
+                          setState(() {
+                            quantity += 1;
+                          });
+                        }),
                     Text(
-                      "01",
+                      quantity.toString(),
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.grey,
@@ -126,13 +118,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                           EvaIcons.minusCircleOutline,
                           size: 32,
                         ),
-                        onPressed: null),
+                        onPressed: () {
+                          if (quantity != 1) {
+                            setState(() {
+                              quantity -= 1;
+                            });
+                          }
+                        }),
                   ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    "UGX " + widget.product.price.toString(),
+                    "UGX " + (widget.product.price * quantity).toString(),
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -177,7 +175,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           )),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        userProvider.addToCart(
+                            product: widget.product, quantity: quantity);
+                      },
                     ),
                   ),
                 ],

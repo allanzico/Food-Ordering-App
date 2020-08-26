@@ -6,6 +6,7 @@ import 'package:market/Providers/MarketProvider.dart';
 import 'package:market/Providers/ProductProvider.dart';
 import 'package:market/Screens/CategoryScreen.dart';
 import 'package:market/Screens/MarketScreen.dart';
+import 'package:market/Screens/MarketSearchScreen.dart';
 import 'package:market/Screens/ProductSearch.dart';
 import 'package:market/Widgets/Categories.dart';
 import 'package:market/Widgets/Featured.dart';
@@ -94,24 +95,84 @@ class _HomeScreenState extends State<HomeScreen> {
                               await productProvider.filterProducts(
                                   productName: pattern.toLowerCase());
                               changeScreen(context, ProductSearchScreen());
-                            } else {}
+                            } else {
+                              await marketProvider.filterMarkets(
+                                  marketName: pattern.toLowerCase());
+                              changeScreen(context, MarketSearchScreen());
+                            }
 
                             appProvider.changeLoadingState();
                           },
                           decoration: InputDecoration(
-                              hintText: "Find Groceries in Markets",
+                              hintText: "Search groceries and markets",
                               border: InputBorder.none),
-                        ),
-                        trailing: Icon(
-                          Icons.filter_list,
-                          color: Colors.black,
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 15,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Search by: ",
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: appProvider.filterBy,
+                            isDense: true,
+                            autofocus: true,
+                            style: TextStyle(fontSize: 18, color: Colors.black),
+                            items: <String>["Products", "Markets"]
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem(
+                                  value: value, child: Text(value));
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                if (value == "Products") {
+                                  appProvider.changeSearchBy(
+                                      newSearchBy: SearchBy.PRODUCTS);
+                                } else {
+                                  appProvider.changeSearchBy(
+                                      newSearchBy: SearchBy.MARKETS);
+                                }
+                              });
+                            },
+                            elevation: 0,
+                            icon: Icon(
+                              Icons.filter_list,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    height: 30,
+                    thickness: 0.3,
+                    indent: 8,
+                    endIndent: 8,
+                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Padding(
+                  //       padding: const EdgeInsets.all(8.0),
+                  //       child: Text("Categories",
+                  //           style: TextStyle(fontSize: 18, color: Colors.grey)),
+                  //     ),
+                  //   ],
+                  // ),
                   Container(
                     height: 75,
                     child: ListView.builder(
@@ -135,6 +196,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
+                  Divider(
+                    height: 50,
+                    thickness: 0.3,
+                    indent: 8,
+                    endIndent: 8,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -146,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("See All",
-                            style: TextStyle(fontSize: 18, color: Colors.grey)),
+                            style: TextStyle(fontSize: 14, color: Colors.grey)),
                       ),
                     ],
                   ),
@@ -162,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("See All",
-                            style: TextStyle(fontSize: 18, color: Colors.grey)),
+                            style: TextStyle(fontSize: 14, color: Colors.grey)),
                       ),
                     ],
                   ),
