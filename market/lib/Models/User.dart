@@ -14,7 +14,9 @@ class UserModel {
   String _email;
   String _id;
   String _stripeId;
-  List<OrderItemModel> _cart;
+
+  //Public variables
+  List cart;
   // List _favorites;
 
   //getters
@@ -22,7 +24,7 @@ class UserModel {
   String get email => _email;
   String get id => _id;
   String get stripeId => _stripeId;
-  List<OrderItemModel> get cart => _cart;
+  // List<OrderItemModel> get cart => _cart;
   // List get favorites => _favorites;
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -30,7 +32,7 @@ class UserModel {
     _email = snapshot.data[EMAIL];
     _id = snapshot.data[ID];
     _stripeId = snapshot.data[STRIPE_ID];
-    _cart = _convertCart(snapshot.data[CART]);
+    cart = snapshot.data[CART] ?? [];
     // _favorites = snapshot.data[FAVORITES] ?? [];
   }
 

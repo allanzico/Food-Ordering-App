@@ -23,6 +23,13 @@ class UserService {
         .updateData(userData);
   }
 
+  //Add to cart
+  void addToCart({String userId, Map cartItem}) {
+    _firestore.collection(collection).document(userId).updateData({
+      "cart": FieldValue.arrayUnion([cartItem])
+    });
+  }
+
   //Get single user
   Future<UserModel> getUserById(String id) {
     _firestore.collection(collection).document(id).get().then((doc) {

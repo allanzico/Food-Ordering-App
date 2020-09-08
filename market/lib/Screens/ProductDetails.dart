@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market/Models/Product.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:market/Providers/AppProvider.dart';
 import 'package:market/Providers/UserProvider.dart';
 
 import 'package:provider/provider.dart';
@@ -15,10 +16,14 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   int quantity = 1;
+  final _key = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final appProvider = Provider.of<AppProvider>(context);
+
     return Scaffold(
+      key: _key,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -176,8 +181,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontWeight: FontWeight.bold,
                           )),
                       onPressed: () async {
-                        userProvider.addToCart(
+                        appProvider.changeLoadingState();
+
+                        bool value = await userProvider.addToCart(
                             product: widget.product, quantity: quantity);
+                        if (value) {
+                          print("ADDED");
+                          _key.currentState.showSnackBar(
+                              SnackBar(content: Text("ADDED TO CART")));
+                        } else {
+                          _key.currentState.showSnackBar(
+                              SnackBar(content: Text("NOT ADDED TO CART")));
+                        }
+                        appProvider.changeLoadingState();
                       },
                     ),
                   ),

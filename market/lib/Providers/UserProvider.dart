@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:market/Helpers/UserService.dart';
+import 'package:market/Models/OrderItem.dart';
 import 'package:market/Models/Product.dart';
 import 'package:market/Models/User.dart';
 import 'package:uuid/uuid.dart';
@@ -77,18 +78,36 @@ class UserProvider with ChangeNotifier {
   }
 
   //Add items to cart
-  void addToCart({ProductModel product, int quantity}) {
-    var uuid = Uuid();
-    String cartItemId = uuid.v4();
+  Future<bool> addToCart({ProductModel product, int quantity}) async {
+    try {
+      var uuid = Uuid();
+      String cartItemId = uuid.v4();
+      List cart = _userModel.cart;
+      bool itemExists = false;
+      Map cartItem = {
+        "id": cartItemId,
+        "name": product.name,
+        "image": product.image,
+        "productId": product.id,
+        "amount": product.price,
+        "quantity": quantity
+      };
 
-    Map values = {
-      "id": cartItemId,
-      "name": product.name,
-      "image": product.image,
-      "productId": product.id,
-      "amount": product.price,
-      "quantity": quantity
-    };
+      for (Map item in cart) {
+        if (item["productId"] == cartItem["productId"]) {
+          item["quantity"] += item["quantity"];
+          itemExists = true;
+          break;
+        }
+      }
+      if (!itemExists) {
+        _userServices.addToCart(userId: _user.uid, cartItem: cartItem);
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
 //Clear text fields
