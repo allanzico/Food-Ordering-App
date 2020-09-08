@@ -48,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ],
                               ),
                               child: Image.asset(
-                                'assets/images/salad.jpg',
+                                'images/noimage.png',
                                 height: 100,
                                 width: 100,
                               )),

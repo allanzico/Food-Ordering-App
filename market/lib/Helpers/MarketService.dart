@@ -28,7 +28,6 @@ class MarketService {
   //Filter Markets
 
   Future<List<MarketModel>> filterMarkets({String marketName}) {
-    List<MarketModel> markets = [];
     String toLowerCase = marketName.toLowerCase();
     return _firestore
         .collection(collection)
@@ -37,6 +36,7 @@ class MarketService {
         .endAt([toLowerCase + '\uf8ff'])
         .getDocuments()
         .then((result) {
+          List<MarketModel> markets = [];
           for (DocumentSnapshot market in result.documents) {
             markets.add(MarketModel.fromSnapshot(market));
           }

@@ -49,7 +49,6 @@ class ProductService {
   //Filter products
 
   Future<List<ProductModel>> filterProducts({String productName}) {
-    List<ProductModel> products = [];
     String toLowerCase = productName.toLowerCase();
     return _firestore
         .collection(collection)
@@ -58,6 +57,7 @@ class ProductService {
         .endAt([toLowerCase + '\uf8ff'])
         .getDocuments()
         .then((result) {
+          List<ProductModel> products = [];
           for (DocumentSnapshot product in result.documents) {
             products.add(ProductModel.fromSnapshot(product));
           }

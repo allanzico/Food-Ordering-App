@@ -26,7 +26,7 @@ void main() {
           theme: ThemeData(
             primaryColor: Colors.black,
           ),
-          home: MainScreen())));
+          home: ScreenController())));
 }
 
 class ScreenController extends StatelessWidget {
