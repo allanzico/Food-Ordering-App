@@ -14,6 +14,7 @@ class UserModel {
   String _email;
   String _id;
   String _stripeId;
+  // List _cart;
 
   //Public variables
   List cart;
@@ -24,7 +25,7 @@ class UserModel {
   String get email => _email;
   String get id => _id;
   String get stripeId => _stripeId;
-  // List<OrderItemModel> get cart => _cart;
+  // List get cart => _cart;
   // List get favorites => _favorites;
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
