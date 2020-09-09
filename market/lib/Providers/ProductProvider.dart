@@ -12,6 +12,7 @@ class ProductProvider with ChangeNotifier {
   ProductProvider.initialize() {
     _loadProducts();
     filterProducts();
+    print(products);
   }
 
   //Private method Load products to List

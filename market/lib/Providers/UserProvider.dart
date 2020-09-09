@@ -10,18 +10,12 @@ import 'package:uuid/uuid.dart';
 enum Status { Uninitialized, Authenticated, UnAuthenticated, Authenticating }
 
 class UserProvider with ChangeNotifier {
-  FirebaseAuth _auth;
+  FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user ;
   Status _status = Status.Uninitialized;
   Firestore _firestore = Firestore.instance;
   UserService _userServices = UserService();
   UserModel _userModel;
-
-  //Get ID
-
-   getUid() async {
-    return (await _auth.currentUser()).uid;
-  }
 
   //getters
   Status get status => _status;
@@ -56,47 +50,50 @@ class UserProvider with ChangeNotifier {
   //User signup
 
 
-  Future<bool> signUp()async{
-    try{
-      _status = Status.Authenticating;
-      notifyListeners();
-      await _auth.createUserWithEmailAndPassword(email: email.text.trim(), password: password.text.trim()).then((result){
-        _firestore.collection('users').document(result.user.uid).setData({
-          'name':name.text,
-          'email':email.text,
-          'uid':result.user.uid,
-          "favorites": [],
-        });
-      });
-      return true;
-    }catch(e){
-      _status = Status.UnAuthenticated;
-      notifyListeners();
-      print(e.toString());
-      return false;
-    }
-  }
-  // Future<bool> signUp() async {
-  //   try {
+  // Future<bool> signUp()async{
+  //   try{
   //     _status = Status.Authenticating;
   //     notifyListeners();
-  //     await _auth
-  //         .createUserWithEmailAndPassword(
-  //             email: email.text.trim(), password: password.text.trim())
-  //         .then((user) {
-  //       Map<String, dynamic> userData = {
-  //         "email": email.text,
-  //         "name": name.text,
-  //         "id": user.user.uid,
+  //     await _auth.createUserWithEmailAndPassword(email: email.text.trim(), password: password.text.trim()).then((result){
+  //       _firestore.collection('users').document(result.user.uid).setData({
+  //         'name':name.text,
+  //         'email':email.text,
+  //         'uid':result.user.uid,
   //         "favorites": [],
-  //       };
-  //       _userServices.createUser(userData);
+  //         "cart": []
+  //       });
   //     });
   //     return true;
-  //   } catch (e) {
-  //     return _onError(e.toString());
+  //   }catch(e){
+  //     _status = Status.UnAuthenticated;
+  //     notifyListeners();
+  //     print(e.toString());
+  //     return false;
   //   }
   // }
+  Future<bool> signUp() async {
+
+    try {
+      _status = Status.Authenticating;
+      notifyListeners();
+      await _auth
+          .createUserWithEmailAndPassword(
+              email: email.text.trim(), password: password.text.trim())
+          .then((user) {
+        Map<String, dynamic> userData = {
+          "email": email.text,
+          "name": name.text,
+          "id": user.user.uid,
+          "favorites": [],
+          "cart":[]
+        };
+        _userServices.createUser(userData);
+      });
+      return true;
+    } catch (e) {
+      return _onError(e.toString());
+    }
+  }
 
   //User signout
   Future<void> signOut() {
@@ -107,10 +104,13 @@ class UserProvider with ChangeNotifier {
 
   //Add items to cart
   Future<bool> addToCart({ProductModel product, int quantity}) async {
-    try {
+    final FirebaseUser firebaseUser = await auth.currentUser();
+    final userId = firebaseUser.uid;
+    _userModel = await _userServices.getUserById(firebaseUser.uid);
+    // try {
       var uuid = Uuid();
       String cartItemId = uuid.v4();
-      List <Map> cart = [];
+      List cart = _userModel.cart;
       bool itemExists = false;
       Map cartItem = {
         "id": cartItemId,
@@ -121,28 +121,27 @@ class UserProvider with ChangeNotifier {
         "quantity": quantity
       };
 
-      for (Map item in cart) {
-        if (item["productId"] == cartItem["productId"]) {
-          item["quantity"] += item["quantity"];
-          itemExists = true;
-          break;
-        }
-      }
+      // for (Map item in cart) {
+      //   if (item["productId"] == cartItem["productId"]) {
+      //     item["quantity"] += item["quantity"];
+      //     itemExists = true;
+      //     break;
+      //   }
+      // }
       if (!itemExists) {
-        _userServices.addToCart(userId: "kgyBSQXs9XXxdUchppvBQSw0AIx1", cartItem: cartItem);
+        _userServices.addToCart(userId: userId, cartItem: cartItem);
         itemExists = true;
-        print("USER: ${_user}" );
-        print("CART ITEMS ARE: ${cart.toString()}");
-        print("USER MODEL: ${userModel}");
-        print (getUid().toString());
+        print("USER: ${firebaseUser}" );
+        print("CART ITEMS ARE: ${cart}");
+
       }
   // print(_user);
   // print(cart);
       return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
+    // } catch (e) {
+    //   print(e);
+    //   return false;
+    // }
   }
 
 //Clear text fields
@@ -165,7 +164,7 @@ class UserProvider with ChangeNotifier {
     if (user == null) {
       _status = Status.UnAuthenticated;
     } else {
-      _user = firebaseUser;
+     firebaseUser = await _auth.currentUser();
       _status = Status.Authenticated;
       _userModel = await _userServices.getUserById(firebaseUser.uid);
     }

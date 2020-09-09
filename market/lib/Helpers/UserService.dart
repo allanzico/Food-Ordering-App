@@ -32,7 +32,7 @@ class UserService {
 
   //Get single user
   Future<UserModel> getUserById(String id) {
-    _firestore.collection(collection).document(id).get().then((doc) {
+    return _firestore.collection(collection).document(id).get().then((doc) {
       return UserModel.fromSnapshot(doc);
     });
   }
