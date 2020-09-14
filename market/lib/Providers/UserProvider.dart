@@ -32,8 +32,17 @@ class UserProvider with ChangeNotifier {
 //constructor
   UserProvider.initialize() : _auth = FirebaseAuth.instance {
     _auth.onAuthStateChanged.listen(_onStateChanged);
+    getUser();
   }
 
+  //get user
+
+  void getUser() async {
+    final FirebaseUser firebaseUser = await auth.currentUser();
+    final userId = firebaseUser.uid;
+    _userModel = await _userServices.getUserById(firebaseUser.uid);
+
+  }
   //User signin
   Future<bool> signIn() async {
     try {
@@ -167,6 +176,7 @@ class UserProvider with ChangeNotifier {
      firebaseUser = await _auth.currentUser();
       _status = Status.Authenticated;
       _userModel = await _userServices.getUserById(firebaseUser.uid);
+      
     }
     notifyListeners();
   }

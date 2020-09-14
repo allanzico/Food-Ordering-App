@@ -33,7 +33,7 @@ class UserModel {
     _email = snapshot.data[EMAIL];
     _id = snapshot.data[ID];
     _stripeId = snapshot.data[STRIPE_ID];
-    cart = snapshot.data[CART];
+    cart = snapshot.data[CART] ?? [];
 
     // cart = _convertCart(snapshot.data[CART]) ?? [];
     // _favorites = snapshot.data[FAVORITES] ?? [];
