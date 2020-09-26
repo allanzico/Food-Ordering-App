@@ -30,6 +30,14 @@ class UserService {
     });
   }
 
+  //Remove from cart
+  void removeFromCart({String userId, Map cartItem}) {
+    _firestore.collection(collection).document(userId).updateData({
+      "cart": FieldValue.arrayRemove([cartItem])
+    });
+  }
+
+
   //Get single user
   Future<UserModel> getUserById(String id) {
     return _firestore.collection(collection).document(id).get().then((doc) {

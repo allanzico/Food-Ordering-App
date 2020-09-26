@@ -193,11 +193,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                           print("ADDED");
                           _key.currentState.showSnackBar(
                               SnackBar(content: Text("ADDED TO CART")));
+                          userProvider.getUser();
+                          appProvider.changeLoadingState();
                         } else {
                           _key.currentState.showSnackBar(
                               SnackBar(content: Text("NOT ADDED TO CART")));
                         }
-                        appProvider.changeLoadingState();
+
                       },
                     ),
                   ),

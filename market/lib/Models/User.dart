@@ -14,10 +14,14 @@ class UserModel {
   String _email;
   String _id;
   String _stripeId;
+  int _priceSum = 0;
+  int _quantitySum = 0;
   // List _cart;
 
   //Public variables
   List cart;
+  int totalCartPrice;
+
   // List _favorites;
 
   //getters
@@ -34,9 +38,23 @@ class UserModel {
     _id = snapshot.data[ID];
     _stripeId = snapshot.data[STRIPE_ID];
     cart = snapshot.data[CART] ?? [];
+    totalCartPrice = getTotalPrice(cart: snapshot.data[CART]);
 
     // cart = _convertCart(snapshot.data[CART]) ?? [];
     // _favorites = snapshot.data[FAVORITES] ?? [];
+  }
+
+  // get total cart price
+  int getTotalPrice({List cart}) {
+    if (cart == null) {
+      return 0;
+    } else {
+      for (Map cartItem in cart) {
+        _priceSum += cartItem['amount'];
+      }
+    }
+
+    return _priceSum;
   }
 
   //Convert cart Items
