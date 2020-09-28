@@ -4,7 +4,7 @@ import 'package:market/Models/Product.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:market/Providers/AppProvider.dart';
 import 'package:market/Providers/UserProvider.dart';
-import 'package:market/Screens/OrderScreen.dart';
+import 'package:market/Screens/CartScreen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -47,8 +47,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     color: Colors.black,
                     size: 35,
                   ),
-                  onPressed: (){
-                    changeScreen(context, OrderScreen());
+                  onPressed: () {
+                    changeScreen(context, CartScreen());
                   }),
               Positioned(
                 bottom: 8,
@@ -199,7 +199,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                           _key.currentState.showSnackBar(
                               SnackBar(content: Text("NOT ADDED TO CART")));
                         }
-
                       },
                     ),
                   ),

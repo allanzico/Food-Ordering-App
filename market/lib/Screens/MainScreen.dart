@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:market/Screens/OrderScreen.dart';
 import 'package:market/Screens/Favorites.dart';
 import 'HomeScreen.dart';
-import 'OrderScreen.dart';
+import 'CartScreen.dart';
 import 'ProfileScreen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -14,9 +15,10 @@ class _MainScreenState extends State<MainScreen> {
   int currentTabIndex = 0;
 
   HomeScreen homeScreen;
+  // CartScreen orderScreen;
   OrderScreen orderScreen;
   ProfileScreen profileScreen;
-  FavoritesScreen favoritesScreen;
+  CartScreen cartScreen;
 
   //List of pages
   List<Widget> pages;
@@ -29,9 +31,9 @@ class _MainScreenState extends State<MainScreen> {
     homeScreen = HomeScreen();
     orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
-    favoritesScreen = FavoritesScreen();
+    cartScreen = CartScreen();
 
-    pages = [homeScreen, orderScreen, favoritesScreen, profileScreen];
+    pages = [homeScreen, orderScreen, cartScreen, profileScreen];
     currentPage = homeScreen;
   }
 
@@ -74,14 +76,14 @@ class _MainScreenState extends State<MainScreen> {
                   title: Text("Orders")),
               BottomNavigationBarItem(
                   icon: Icon(
-                    EvaIcons.heartOutline,
+                    EvaIcons.shoppingCartOutline,
                     color: Colors.black,
                   ),
                   activeIcon: Icon(
-                    EvaIcons.heart,
+                    EvaIcons.shoppingCart,
                     color: Colors.black,
                   ),
-                  title: Text("Favorites")),
+                  title: Text("Cart")),
               BottomNavigationBarItem(
                   icon: Icon(
                     EvaIcons.personOutline,
