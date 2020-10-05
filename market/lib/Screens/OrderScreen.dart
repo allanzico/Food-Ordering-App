@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:market/Models/Order.dart';
 import 'package:market/Providers/AppProvider.dart';
 import 'package:market/Providers/UserProvider.dart';
 import 'package:provider/provider.dart';
 
-class OrderScreen extends StatelessWidget {
+class OrderScreen extends StatefulWidget {
+  @override
+  _OrderScreenState createState() => _OrderScreenState();
+}
+
+class _OrderScreenState extends State<OrderScreen> {
+  @override
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final appProvider = Provider.of<AppProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
@@ -27,7 +28,19 @@ class OrderScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Container(),
+      body: ListView.builder(
+          itemCount: userProvider.orders.length,
+          itemBuilder: (BuildContext context, int index) {
+            OrderModel _order = userProvider.orders[index];
+            return ListTile(
+              leading: Text(_order.totalPrice.toString()),
+              title: Text(_order.description),
+              subtitle: Text(
+                  DateTime.fromMicrosecondsSinceEpoch(_order.createdAt)
+                      .toString()),
+              trailing: Text(_order.status),
+            );
+          }),
     );
   }
 }

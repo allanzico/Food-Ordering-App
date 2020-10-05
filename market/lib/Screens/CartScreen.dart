@@ -1,16 +1,23 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:market/Helpers/OrderService.dart';
 import 'package:market/Providers/AppProvider.dart';
 import 'package:market/Providers/UserProvider.dart';
 import 'package:market/Widgets/OrderItem.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class CartScreen extends StatefulWidget {
+  const CartScreen({
+    Key key,
+  }) : super(key: key);
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
+  OrderService _orderService = OrderService();
+  final _key = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
@@ -19,15 +26,9 @@ class _CartScreenState extends State<CartScreen> {
     //get total cart price
 
     return Scaffold(
+      key: _key,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
@@ -108,7 +109,64 @@ class _CartScreenState extends State<CartScreen> {
                     style: TextStyle(fontSize: 22, color: Colors.white),
                   ),
                   onPressed: () {
-                    _showDialog();
+                    if (userProvider.userModel.totalCartPrice == 0) {
+                      _showDialog(
+                        Text("data"),
+                        Text("Empty cart"),
+                        null,
+                        FlatButton(
+                          child: new Text("Close"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      );
+                    } else {
+                      _showDialog(
+                        Text("data"),
+                        Text(
+                            "you will be charged ${userProvider.userModel.totalCartPrice}"),
+                        FlatButton(
+                          child: new Text("Accept"),
+                          onPressed: () async {
+                            var uuid = Uuid();
+                            String orderId = uuid.v4();
+                            _orderService.createOrder(
+                                userId: userProvider.userModel.id,
+                                id: orderId,
+                                description: "something",
+                                status: "complete",
+                                totalPrice:
+                                    userProvider.userModel.totalCartPrice,
+                                cart: userProvider.userModel.cart);
+                            for (Map cartItem in userProvider.userModel.cart) {
+                              appProvider.changeLoadingState();
+                              bool value = await userProvider.removeFromCart(
+                                  cartItem: cartItem);
+                              if (value) {
+                                userProvider.getUser();
+                                _key.currentState.showSnackBar(
+                                    SnackBar(content: Text("ORDER CREATED")));
+                                appProvider.changeLoadingState();
+                                return;
+                              } else {
+                                _key.currentState.showSnackBar(SnackBar(
+                                    content: Text("ORDER NOT CREATED")));
+                              }
+                            }
+                            _key.currentState.showSnackBar(
+                                SnackBar(content: Text("ORDER CREATED")));
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        FlatButton(
+                          child: new Text("Close"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      );
+                    }
                   },
                 ),
               )
@@ -121,29 +179,31 @@ class _CartScreenState extends State<CartScreen> {
 
 //Show dialog
 
-  void _showDialog() {
+  void _showDialog(
+      Text title, Text content, FlatButton accept, FlatButton reject) {
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Alert Dialog title"),
-          content: new Text("Alert Dialog body"),
+          title: title,
+          content: content,
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Accept"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+            accept, reject
+            // new FlatButton(
+            //   child: new Text("Accept"),
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // ),
+            // new FlatButton(
+            //   child: new Text("Close"),
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // ),
           ],
         );
       },

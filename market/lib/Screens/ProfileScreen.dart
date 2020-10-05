@@ -1,4 +1,9 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:market/Helpers/ScreenNavigation.dart';
+import 'package:market/Providers/UserProvider.dart';
+import 'package:market/Screens/OrderScreen.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -10,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool turnOnLocationNotification = false;
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -22,22 +28,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey[300],
-                              offset: Offset(1, 1),
-                              blurRadius: 5),
-                        ],
-                        borderRadius: BorderRadius.circular(50),
-                        image: DecorationImage(
-                            image: AssetImage("images/profile.jpg"),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.center)),
-                  ),
                   SizedBox(
                     width: 20,
                   ),
@@ -96,15 +86,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: <Widget>[
                       ListTile(
                         leading: Icon(
-                          Icons.location_on,
+                          EvaIcons.shoppingBag,
                           color: Colors.black,
                         ),
                         title: Text(
-                          "Location",
+                          "Orders",
                           style: TextStyle(
                             fontSize: 16,
                           ),
                         ),
+                        onTap: () async {
+                          await userProvider.getOrders();
+                          // changeScreen(context, OrderScreen());
+                        },
                       ),
                       Divider(
                         height: 1,

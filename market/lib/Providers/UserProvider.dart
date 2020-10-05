@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:market/Helpers/OrderService.dart';
 import 'package:market/Helpers/UserService.dart';
+import 'package:market/Models/Order.dart';
 import 'package:market/Models/OrderItem.dart';
 import 'package:market/Models/Product.dart';
 import 'package:market/Models/User.dart';
@@ -15,7 +17,12 @@ class UserProvider with ChangeNotifier {
   Status _status = Status.Uninitialized;
   Firestore _firestore = Firestore.instance;
   UserService _userServices = UserService();
+  OrderService _orderService = OrderService();
   UserModel _userModel;
+  String _userId;
+
+//Public variables
+  List<OrderModel> orders = [];
 
   //getters
   Status get status => _status;
@@ -23,6 +30,7 @@ class UserProvider with ChangeNotifier {
   FirebaseAuth get auth => _auth;
   Firestore get firestore => _firestore;
   UserModel get userModel => _userModel;
+  String get userId => _userId;
 
   final formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
@@ -34,12 +42,12 @@ class UserProvider with ChangeNotifier {
     _auth.onAuthStateChanged.listen(_onStateChanged);
     getUser();
   }
+//get User ID
 
   //get user
-
   void getUser() async {
     final FirebaseUser firebaseUser = await auth.currentUser();
-    final userId = await firebaseUser.uid;
+    String userId = await firebaseUser.uid;
     _userModel = await _userServices.getUserById(userId);
     notifyListeners();
   }
@@ -57,6 +65,13 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+//Get Order
+  getOrders() async {
+    final FirebaseUser firebaseUser = await auth.currentUser();
+    final userId = await firebaseUser.uid;
+    orders = await _orderService.getUserOrders(userId: userModel.id);
+    notifyListeners();
+  }
   //User signup
 
   // Future<bool> signUp()async{
@@ -188,7 +203,7 @@ class UserProvider with ChangeNotifier {
     } else {
       firebaseUser = await _auth.currentUser();
       _status = Status.Authenticated;
-      _userModel = await _userServices.getUserById(firebaseUser.uid);
+      // _userModel = await _userServices.getUserById(firebaseUser.uid);
     }
     notifyListeners();
   }
