@@ -31,6 +31,7 @@ class OrderModel {
 
   OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
     _id = snapshot.data[ID];
+    _userId = snapshot.data[USER_ID];
     _description = snapshot.data[DESCRIPTION];
     cart = snapshot.data[CART];
     _totalPrice = snapshot.data[TOTAL_PRICE];

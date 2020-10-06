@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:market/Helpers/OrderService.dart';
+import 'package:market/Models/OrderItem.dart';
 import 'package:market/Providers/AppProvider.dart';
 import 'package:market/Providers/UserProvider.dart';
 import 'package:market/Widgets/OrderItem.dart';
@@ -139,7 +140,8 @@ class _CartScreenState extends State<CartScreen> {
                                 totalPrice:
                                     userProvider.userModel.totalCartPrice,
                                 cart: userProvider.userModel.cart);
-                            for (Map cartItem in userProvider.userModel.cart) {
+                            for (OrderItemModel cartItem
+                                in userProvider.userModel.cart) {
                               appProvider.changeLoadingState();
                               bool value = await userProvider.removeFromCart(
                                   cartItem: cartItem);
@@ -149,14 +151,11 @@ class _CartScreenState extends State<CartScreen> {
                                     SnackBar(content: Text("ORDER CREATED")));
                                 appProvider.changeLoadingState();
                                 return;
-                              } else {
-                                _key.currentState.showSnackBar(SnackBar(
-                                    content: Text("ORDER NOT CREATED")));
                               }
                             }
+                            Navigator.of(context).pop();
                             _key.currentState.showSnackBar(
                                 SnackBar(content: Text("ORDER CREATED")));
-                            Navigator.of(context).pop();
                           },
                         ),
                         FlatButton(

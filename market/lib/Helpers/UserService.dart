@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:market/Models/OrderItem.dart';
 import 'package:market/Models/User.dart';
 
 class UserService {
@@ -24,19 +25,18 @@ class UserService {
   }
 
   //Add to cart
-  void addToCart({String userId, Map cartItem}) {
+  void addToCart({String userId, OrderItemModel cartItem}) {
     _firestore.collection(collection).document(userId).updateData({
-      "cart": FieldValue.arrayUnion([cartItem])
+      "cart": FieldValue.arrayUnion([cartItem.toMap()])
     });
   }
 
   //Remove from cart
-  void removeFromCart({String userId, Map cartItem}) {
+  void removeFromCart({String userId, OrderItemModel cartItem}) {
     _firestore.collection(collection).document(userId).updateData({
-      "cart": FieldValue.arrayRemove([cartItem])
+      "cart": FieldValue.arrayRemove([cartItem.toMap()])
     });
   }
-
 
   //Get single user
   Future<UserModel> getUserById(String id) {

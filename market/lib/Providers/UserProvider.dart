@@ -47,8 +47,7 @@ class UserProvider with ChangeNotifier {
   //get user
   void getUser() async {
     final FirebaseUser firebaseUser = await auth.currentUser();
-    String userId = await firebaseUser.uid;
-    _userModel = await _userServices.getUserById(userId);
+    _userModel = await _userServices.getUserById(firebaseUser.uid);
     notifyListeners();
   }
 
@@ -68,33 +67,11 @@ class UserProvider with ChangeNotifier {
 //Get Order
   getOrders() async {
     final FirebaseUser firebaseUser = await auth.currentUser();
-    final userId = await firebaseUser.uid;
-    orders = await _orderService.getUserOrders(userId: userModel.id);
+    orders = await _orderService.getUserOrders(userId: firebaseUser.uid);
     notifyListeners();
   }
   //User signup
 
-  // Future<bool> signUp()async{
-  //   try{
-  //     _status = Status.Authenticating;
-  //     notifyListeners();
-  //     await _auth.createUserWithEmailAndPassword(email: email.text.trim(), password: password.text.trim()).then((result){
-  //       _firestore.collection('users').document(result.user.uid).setData({
-  //         'name':name.text,
-  //         'email':email.text,
-  //         'uid':result.user.uid,
-  //         "favorites": [],
-  //         "cart": []
-  //       });
-  //     });
-  //     return true;
-  //   }catch(e){
-  //     _status = Status.UnAuthenticated;
-  //     notifyListeners();
-  //     print(e.toString());
-  //     return false;
-  //   }
-  // }
   Future<bool> signUp() async {
     try {
       _status = Status.Authenticating;
@@ -152,7 +129,8 @@ class UserProvider with ChangeNotifier {
     //   }
     // }
 //    if (!itemExists) {
-    _userServices.addToCart(userId: userId, cartItem: cartItem);
+    OrderItemModel item = OrderItemModel.fromMap(cartItem);
+    _userServices.addToCart(userId: userId, cartItem: item);
     //itemExists = true;
     print("USER: $firebaseUser");
     print("CART ITEMS ARE: $cart");
@@ -167,7 +145,7 @@ class UserProvider with ChangeNotifier {
   }
 
   //Remove items from cart
-  Future<bool> removeFromCart({Map cartItem}) async {
+  Future<bool> removeFromCart({OrderItemModel cartItem}) async {
     final FirebaseUser firebaseUser = await auth.currentUser();
     final userId = firebaseUser.uid;
     // _userModel = await _userServices.getUserById(firebaseUser.uid);
