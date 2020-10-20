@@ -7,7 +7,7 @@ class OrderService {
   String collection = "orders";
   Firestore _firestore = Firestore.instance;
 
-  //Create new user
+  //Create new order
   void createOrder(
       {String userId,
       String id,
@@ -28,16 +28,16 @@ class OrderService {
 
   //Get user Orders
   Future<List<OrderModel>> getUserOrders({String userId}) async {
-    List<OrderModel> orders = [];
     _firestore
         .collection(collection)
         .where("userId", isEqualTo: userId)
         .getDocuments()
         .then((result) {
+      List<OrderModel> orders = [];
       for (DocumentSnapshot order in result.documents) {
         orders.add(OrderModel.fromSnapshot(order));
       }
+      return orders;
     });
-    return orders;
   }
 }

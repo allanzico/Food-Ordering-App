@@ -4,9 +4,9 @@ class OrderItemModel {
   static const ID = "id";
   static const NAME = "name";
   static const PRODUCT_ID = "productId";
-  static const AMOUNT = "price";
+  static const AMOUNT = "amount";
   static const IMAGE = "image";
-  static const QUANTITY = "status";
+  static const QUANTITY = "quantity";
 
   //Private variables
   String _id;
@@ -21,7 +21,7 @@ class OrderItemModel {
   String get image => _image;
   String get productId => _productId;
   String get id => _id;
-  int get status => _quantity;
+  int get quantity => _quantity;
   int get amount => _amount;
 
   OrderItemModel.fromMap(Map data) {

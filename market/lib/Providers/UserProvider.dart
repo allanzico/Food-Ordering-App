@@ -13,9 +13,9 @@ enum Status { Uninitialized, Authenticated, UnAuthenticated, Authenticating }
 
 class UserProvider with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseUser _user;
   Status _status = Status.Uninitialized;
   Firestore _firestore = Firestore.instance;
+  FirebaseUser _user;
   UserService _userServices = UserService();
   OrderService _orderService = OrderService();
   UserModel _userModel;
@@ -26,11 +26,11 @@ class UserProvider with ChangeNotifier {
 
   //getters
   Status get status => _status;
-  FirebaseUser get user => _user;
   FirebaseAuth get auth => _auth;
   Firestore get firestore => _firestore;
   UserModel get userModel => _userModel;
   String get userId => _userId;
+  FirebaseUser get user => _user;
 
   final formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
@@ -40,14 +40,12 @@ class UserProvider with ChangeNotifier {
 //constructor
   UserProvider.initialize() : _auth = FirebaseAuth.instance {
     _auth.onAuthStateChanged.listen(_onStateChanged);
-    getUser();
   }
 //get User ID
 
   //get user
-  void getUser() async {
-    final FirebaseUser firebaseUser = await auth.currentUser();
-    _userModel = await _userServices.getUserById(firebaseUser.uid);
+  Future<void> getUser() async {
+    _userModel = await _userServices.getUserById(user.uid);
     notifyListeners();
   }
 
@@ -66,8 +64,9 @@ class UserProvider with ChangeNotifier {
 
 //Get Order
   getOrders() async {
-    final FirebaseUser firebaseUser = await auth.currentUser();
-    orders = await _orderService.getUserOrders(userId: firebaseUser.uid);
+    orders = await _orderService.getUserOrders(
+        userId: "lX7Hag0n54URSdpwPVn9HUo72Pv1");
+    print(orders);
     notifyListeners();
   }
   //User signup
@@ -107,41 +106,30 @@ class UserProvider with ChangeNotifier {
     final FirebaseUser firebaseUser = await auth.currentUser();
     final userId = firebaseUser.uid;
     _userModel = await _userServices.getUserById(firebaseUser.uid);
-    // try {
-    var uuid = Uuid();
-    String cartItemId = uuid.v4();
-    List cart = _userModel.cart;
-//    bool itemExists = false;
-    Map cartItem = {
-      "id": cartItemId,
-      "name": product.name,
-      "image": product.image,
-      "productId": product.id,
-      "amount": product.price * quantity,
-      "quantity": quantity
-    };
+    try {
+      var uuid = Uuid();
+      String cartItemId = uuid.v4();
+      List cart = _userModel.cart;
+      Map cartItem = {
+        "id": cartItemId,
+        "name": product.name,
+        "image": product.image,
+        "productId": product.id,
+        "amount": product.price * quantity,
+        "quantity": quantity
+      };
 
-    // for (Map item in cart) {
-    //   if (item["productId"] == cartItem["productId"]) {
-    //     item["quantity"] += item["quantity"];
-    //     itemExists = true;
-    //     break;
-    //   }
-    // }
-//    if (!itemExists) {
-    OrderItemModel item = OrderItemModel.fromMap(cartItem);
-    _userServices.addToCart(userId: userId, cartItem: item);
-    //itemExists = true;
-    print("USER: $firebaseUser");
-    print("CART ITEMS ARE: $cart");
-//    }
-    // print(_user);
-    // print(cart);
-    return true;
-    // } catch (e) {
-    //   print(e);
-    //   return false;
-    // }
+      OrderItemModel item = OrderItemModel.fromMap(cartItem);
+      _userServices.addToCart(userId: userId, cartItem: item);
+
+      print("USER: $firebaseUser");
+      print("CART ITEMS ARE: $cart");
+
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   //Remove items from cart
@@ -176,12 +164,13 @@ class UserProvider with ChangeNotifier {
 
 //Listen for auth state
   Future<void> _onStateChanged(FirebaseUser firebaseUser) async {
-    if (user == null) {
+    if (firebaseUser == null) {
       _status = Status.UnAuthenticated;
     } else {
-      firebaseUser = await _auth.currentUser();
+      // firebaseUser = await _auth.currentUser();
+      _user = firebaseUser;
       _status = Status.Authenticated;
-      // _userModel = await _userServices.getUserById(firebaseUser.uid);
+      _userModel = await _userServices.getUserById(user.uid);
     }
     notifyListeners();
   }

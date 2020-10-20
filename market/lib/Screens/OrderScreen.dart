@@ -32,6 +32,7 @@ class _OrderScreenState extends State<OrderScreen> {
           itemCount: userProvider.orders.length,
           itemBuilder: (BuildContext context, int index) {
             OrderModel _order = userProvider.orders[index];
+
             return ListTile(
               leading: Text(_order.totalPrice.toString()),
               title: Text(_order.description),

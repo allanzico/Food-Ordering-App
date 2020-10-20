@@ -29,11 +29,11 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
 
     homeScreen = HomeScreen();
-    // orderScreen = OrderScreen();
+    orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
     cartScreen = CartScreen();
 
-    pages = [homeScreen, cartScreen, profileScreen];
+    pages = [homeScreen, orderScreen, cartScreen, profileScreen];
     currentPage = homeScreen;
   }
 
@@ -64,16 +64,16 @@ class _MainScreenState extends State<MainScreen> {
                     color: Colors.black,
                   ),
                   title: Text("Home")),
-              // BottomNavigationBarItem(
-              //     icon: Icon(
-              //       EvaIcons.shoppingBagOutline,
-              //       color: Colors.black,
-              //     ),
-              //     activeIcon: Icon(
-              //       EvaIcons.shoppingBag,
-              //       color: Colors.black,
-              //     ),
-              //     title: Text("Orders")),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    EvaIcons.shoppingBagOutline,
+                    color: Colors.black,
+                  ),
+                  activeIcon: Icon(
+                    EvaIcons.shoppingBag,
+                    color: Colors.black,
+                  ),
+                  title: Text("Orders")),
               BottomNavigationBarItem(
                   icon: Icon(
                     EvaIcons.shoppingCartOutline,
