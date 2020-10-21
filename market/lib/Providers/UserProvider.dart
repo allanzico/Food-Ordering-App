@@ -19,7 +19,7 @@ class UserProvider with ChangeNotifier {
   UserService _userServices = UserService();
   OrderService _orderService = OrderService();
   UserModel _userModel;
-  String _userId;
+
 
 //Public variables
   List<OrderModel> orders = [];
@@ -29,7 +29,7 @@ class UserProvider with ChangeNotifier {
   FirebaseAuth get auth => _auth;
   Firestore get firestore => _firestore;
   UserModel get userModel => _userModel;
-  String get userId => _userId;
+
   FirebaseUser get user => _user;
 
   final formKey = GlobalKey<FormState>();
@@ -65,7 +65,7 @@ class UserProvider with ChangeNotifier {
 //Get Order
   getOrders() async {
     orders = await _orderService.getUserOrders(
-        userId: "lX7Hag0n54URSdpwPVn9HUo72Pv1");
+        userId: user.uid);
     print(orders);
     notifyListeners();
   }

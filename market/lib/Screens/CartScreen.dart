@@ -133,7 +133,7 @@ class _CartScreenState extends State<CartScreen> {
                             var uuid = Uuid();
                             String orderId = uuid.v4();
                             _orderService.createOrder(
-                                userId: userProvider.userModel.id,
+                                userId: userProvider.user.uid,
                                 id: orderId,
                                 description: "something",
                                 status: "complete",
