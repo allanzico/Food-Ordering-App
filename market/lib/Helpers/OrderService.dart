@@ -20,7 +20,7 @@ class OrderService {
       "id": id,
       "cart": cart,
       "totalPrice": totalPrice,
-      "createAt": DateTime.now().millisecondsSinceEpoch,
+      "createdAt": DateTime.now().millisecondsSinceEpoch,
       "description": description,
       "status": status
     });
@@ -28,16 +28,16 @@ class OrderService {
 
   //Get user Orders
   Future<List<OrderModel>> getUserOrders({String userId}) async {
-    _firestore
+    List<OrderModel> orders = [];
+    await _firestore
         .collection(collection)
         .where("userId", isEqualTo: userId)
         .getDocuments()
         .then((result) {
-      List<OrderModel> orders = [];
       for (DocumentSnapshot order in result.documents) {
         orders.add(OrderModel.fromSnapshot(order));
       }
-      return orders;
     });
+    return orders;
   }
 }

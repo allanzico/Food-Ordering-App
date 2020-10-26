@@ -96,10 +96,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         onTap: () async {
-                     await userProvider.getOrders();
+                          await userProvider.getOrders();
                           // print(orders);
-                          // print(userProvider.orders.length);
-                          // changeScreen(context, OrderScreen());
+                          print(userProvider.orders.length);
+                          changeScreen(context, OrderScreen());
                         },
                       ),
                       Divider(
