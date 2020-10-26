@@ -19,7 +19,7 @@ class ProductService {
   //Fetch Products by category
   Future<List<ProductModel>> getProductsByCategory({String category}) async {
     List<ProductModel> products = [];
-    _firestore
+    await _firestore
         .collection(collection)
         .where("category", isEqualTo: category)
         .getDocuments()
@@ -34,7 +34,7 @@ class ProductService {
   //Fetch Products by Market
   Future<List<ProductModel>> getProductsByMarket({String marketId}) async {
     List<ProductModel> products = [];
-    _firestore
+    await _firestore
         .collection(collection)
         .where("marketId", isEqualTo: marketId)
         .getDocuments()
