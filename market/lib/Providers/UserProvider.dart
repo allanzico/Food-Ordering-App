@@ -20,7 +20,6 @@ class UserProvider with ChangeNotifier {
   OrderService _orderService = OrderService();
   UserModel _userModel;
 
-
 //Public variables
   List<OrderModel> orders = [];
 
@@ -64,8 +63,7 @@ class UserProvider with ChangeNotifier {
 
 //Get Order
   getOrders() async {
-    orders = await _orderService.getUserOrders(
-        userId: user.uid);
+    orders = await _orderService.getUserOrders(userId: user.uid);
     print(orders);
     notifyListeners();
   }
@@ -133,12 +131,9 @@ class UserProvider with ChangeNotifier {
   }
 
   //Remove items from cart
-  Future<bool> removeFromCart({OrderItemModel cartItem}) async {
-    final FirebaseUser firebaseUser = await auth.currentUser();
-    final userId = firebaseUser.uid;
-    // _userModel = await _userServices.getUserById(firebaseUser.uid);
+  Future<bool> removeFromCart({Map cartItem}) async {
     try {
-      _userServices.removeFromCart(userId: userId, cartItem: cartItem);
+      _userServices.removeFromCart(userId: user.uid, cartItem: cartItem);
 
       return true;
     } catch (e) {

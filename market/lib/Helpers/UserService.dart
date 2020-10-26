@@ -32,9 +32,14 @@ class UserService {
   }
 
   //Remove from cart
-  void removeFromCart({String userId, OrderItemModel cartItem}) {
+  // void removeFromCart({String userId, OrderItemModel cartItem}) {
+  //   _firestore.collection(collection).document(userId).updateData({
+  //     "cart": FieldValue.arrayRemove([cartItem.toMap()])
+  //   });
+  // }
+  void removeFromCart({String userId, Map cartItem}) {
     _firestore.collection(collection).document(userId).updateData({
-      "cart": FieldValue.arrayRemove([cartItem.toMap()])
+      "cart": FieldValue.arrayRemove([cartItem])
     });
   }
 

@@ -58,7 +58,7 @@ class _CartScreenState extends State<CartScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30)),
                   child: Center(
-                    child: Text("22",
+                    child: Text(userProvider.userModel.cart.length.toString(),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 10,
@@ -140,8 +140,7 @@ class _CartScreenState extends State<CartScreen> {
                                 totalPrice:
                                     userProvider.userModel.totalCartPrice,
                                 cart: userProvider.userModel.cart);
-                            for (OrderItemModel cartItem
-                                in userProvider.userModel.cart) {
+                            for (Map cartItem in userProvider.userModel.cart) {
                               appProvider.changeLoadingState();
                               bool value = await userProvider.removeFromCart(
                                   cartItem: cartItem);

@@ -60,7 +60,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30)),
                   child: Center(
-                    child: Text("22",
+                    child: Text(userProvider.userModel.cart.length.toString(),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 10,
