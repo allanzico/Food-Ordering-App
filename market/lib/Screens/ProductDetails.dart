@@ -145,97 +145,63 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ],
             ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
             SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    height: 50,
-                    child: OutlineButton(
-                      color: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Icon(
-                        Icons.favorite_border,
-                        size: 32,
-                      ),
-                      onPressed: () async {},
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    height: 50,
-                    child: RaisedButton(
-                      elevation: 0,
-                      color: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text('Add to cart',
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      onPressed: () async {
-                        appProvider.changeLoadingState();
-
-                        bool value = await userProvider.addToCart(
-                            product: widget.product, quantity: quantity);
-                        if (value) {
-                          print("ADDED");
-                          _key.currentState.showSnackBar(
-                              SnackBar(content: Text("ADDED TO CART")));
-                          userProvider.getUser();
-                          appProvider.changeLoadingState();
-                        } else {
-                          _key.currentState.showSnackBar(
-                              SnackBar(content: Text("NOT ADDED TO CART")));
-                        }
-                      },
-                    ),
-                  ),
-                ],
+              width: MediaQuery.of(context).size.width * 0.2,
+              height: 50,
+              child: OutlineButton(
+                color: Colors.grey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Icon(
+                  Icons.favorite_border,
+                  size: 32,
+                ),
+                onPressed: () async {},
               ),
             ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: 50,
+              child: RaisedButton(
+                elevation: 0,
+                color: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Text('Add to cart',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    )),
+                onPressed: () async {
+                  appProvider.changeLoadingState();
 
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     IconButton(
-            //         icon: Icon(
-            //           Icons.remove,
-            //           size: 20,
-            //         ),
-            //         onPressed: null),
-            //     GestureDetector(
-            //       onTap: () {},
-            //       child: Container(
-            //         decoration: BoxDecoration(
-            //           color: Colors.black,
-            //         ),
-            //         child: Padding(
-            //             padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-            //             child: Text("Add to bag",
-            //                 style: TextStyle(
-            //                   color: Colors.white,
-            //                   fontWeight: FontWeight.bold,
-            //                   fontSize: 22,
-            //                 ))),
-            //       ),
-            //     ),
-            //     IconButton(
-            //         icon: Icon(Icons.add, size: 20, color: Colors.black),
-            //         onPressed: null),
-            //   ],
-            // )
+                  bool value = await userProvider.addToCart(
+                      product: widget.product, quantity: quantity);
+                  if (value) {
+                    print("ADDED");
+                    _key.currentState
+                        .showSnackBar(SnackBar(content: Text("ADDED TO CART")));
+                    userProvider.getUser();
+                    appProvider.changeLoadingState();
+                  } else {
+                    _key.currentState.showSnackBar(
+                        SnackBar(content: Text("NOT ADDED TO CART")));
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),
