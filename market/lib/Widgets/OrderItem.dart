@@ -39,132 +39,137 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
             }
             appProvider.changeTotalPrice(newTotal: totalQuantity * priceSum);
 
-            return Expanded(
-                child: Stack(
-              children: [
-                Container(
-                  height: 80,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey[100],
-                            offset: Offset(1, 1),
-                            blurRadius: 4),
-                      ],
-                      borderRadius: BorderRadius.circular(22)),
-                ),
-                Positioned(
-                    top: 0,
-                    left: 0,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      height: 80,
-                      width: 120,
-                      child: Image.network(
-                        userProvider.userModel.cart[index]["image"],
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    width: 40,
-                    height: 40,
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 8),
+              child: Expanded(
+                  child: Stack(
+                children: [
+                  Container(
+                    height: 80,
                     decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10))),
-                    child: IconButton(
-                        icon: Icon(
-                          EvaIcons.trash,
-                          size: 20,
-                        ),
-                        onPressed: () async {
-                          appProvider.changeLoadingState();
-                          bool value = await userProvider.removeFromCart(
-                              cartItem: userProvider.userModel.cart[index]);
-                          if (value) {
-                            userProvider.getUser();
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    "${userProvider.userModel.cart[index]["name"]} removed from cart")));
-
-                            appProvider.changeLoadingState();
-                            return;
-                          } else {
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    "${userProvider.userModel.cart[index]["name"]} not removed")));
-                          }
-                        }),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey[200],
+                              offset: Offset(1, 1),
+                              blurRadius: 4),
+                        ],
+                        borderRadius: BorderRadius.circular(22)),
                   ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              child: Text(
-                                userProvider.userModel.cart[index]["name"],
-                                style: TextStyle(
-                                  fontSize: 18,
+                  Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        height: 80,
+                        width: 120,
+                        child: Image.network(
+                          userProvider.userModel.cart[index]["image"],
+                          fit: BoxFit.cover,
+                        ),
+                      )),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10))),
+                      child: IconButton(
+                          icon: Icon(
+                            EvaIcons.trash,
+                            size: 18,
+                          ),
+                          onPressed: () async {
+                            appProvider.changeLoadingState();
+                            bool value = await userProvider.removeFromCart(
+                                cartItem: userProvider.userModel.cart[index]);
+                            if (value) {
+                              userProvider.getUser();
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      "${userProvider.userModel.cart[index]["name"]} removed from cart")));
+
+                              appProvider.changeLoadingState();
+                              return;
+                            } else {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      "${userProvider.userModel.cart[index]["name"]} not removed")));
+                            }
+                          }),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Text(
+                                  userProvider.userModel.cart[index]["name"],
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                                icon: Icon(
-                                  EvaIcons.plusCircleOutline,
-                                  size: 14,
-                                ),
-                                onPressed: () {}),
-                            Text(
-                              userProvider.userModel.cart[index]["quantity"]
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                  icon: Icon(
+                                    EvaIcons.plusCircleOutline,
+                                    size: 18,
+                                  ),
+                                  onPressed: () {}),
+                              Text(
+                                userProvider.userModel.cart[index]["quantity"]
+                                    .toString(),
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              IconButton(
+                                  icon: Icon(
+                                    EvaIcons.minusCircleOutline,
+                                    size: 18,
+                                  ),
+                                  onPressed: () {}),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 5,
+                    right: 0,
+                    child: Container(
+                      child: Text(
+                          "Ugx " +
+                              userProvider.userModel.cart[index]["amount"]
                                   .toString(),
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            IconButton(
-                                icon: Icon(
-                                  EvaIcons.minusCircleOutline,
-                                  size: 14,
-                                ),
-                                onPressed: () {}),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  bottom: 5,
-                  right: 0,
-                  child: Container(
-                    child: Text(
-                        "Ugx " +
-                            userProvider.userModel.cart[index]["amount"]
-                                .toString(),
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                  ),
-                )
-              ],
-            ));
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                  )
+                ],
+              )),
+            );
           }),
     );
   }
