@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          "shopping bag",
+          "shopping Cart",
           style: TextStyle(
               fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
         ),

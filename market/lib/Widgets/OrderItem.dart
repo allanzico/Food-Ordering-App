@@ -38,78 +38,151 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
               itemTotalPrice = itemQuantity * itemPrice;
             }
             appProvider.changeTotalPrice(newTotal: totalQuantity * priceSum);
+
             return Container(
-              height: 120,
               width: MediaQuery.of(context).size.width - 10,
+              margin: EdgeInsets.symmetric(vertical: 5),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey[300],
-                        offset: Offset(1, 1),
-                        blurRadius: 4),
-                  ],
-                  borderRadius: BorderRadius.circular(5)),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey[100],
+                      offset: Offset(1, 1),
+                      blurRadius: 4),
+                ],
+                borderRadius: BorderRadius.circular(5),
+              ),
               child: Row(
                 children: [
-                  Image.network(
-                    userProvider.userModel.cart[index]["image"],
-                    height: 120,
-                    width: 120,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.bottomLeft,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          userProvider.userModel.cart[index]["name"],
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                        Text(
-                            userProvider.userModel.cart[index]["amount"]
-                                .toString(),
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        Text(
-                            userProvider.userModel.cart[index]["quantity"]
-                                .toString(),
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold))
-                      ],
+                  Center(
+                    child: Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: NetworkImage(userProvider
+                                  .userModel.cart[index]["image"]))),
                     ),
                   ),
-                  SizedBox(
-                    width: 80,
+                  Container(
+                    color: Colors.grey,
+                    height: 50,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    width: 0.5,
                   ),
-                  IconButton(
-                      icon: Icon(EvaIcons.trash),
-                      onPressed: () async {
-                        appProvider.changeLoadingState();
-                        bool value = await userProvider.removeFromCart(
-                            cartItem: userProvider.userModel.cart[index]);
-                        if (value) {
-                          userProvider.getUser();
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  "${userProvider.userModel.cart[index]["name"]} removed from cart")));
-
-                          appProvider.changeLoadingState();
-                          return;
-                        } else {
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  "${userProvider.userModel.cart[index]["name"]} not removed")));
-                        }
-                      })
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text(
+                          userProvider.userModel.cart[index]["name"],
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                            "Quantity: " +
+                                userProvider.userModel.cart[index]["quantity"]
+                                    .toString(),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey)),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        child: Text(
+                            "Ugx " +
+                                userProvider.userModel.cart[index]["amount"]
+                                    .toString(),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                      )
+                    ],
+                  ),
                 ],
               ),
             );
+
+            // return Container(
+            //   height: 120,
+            //   width: MediaQuery.of(context).size.width - 10,
+            //   decoration: BoxDecoration(
+            //       color: Colors.white,
+            //       boxShadow: [
+            //         BoxShadow(
+            //             color: Colors.grey[300],
+            //             offset: Offset(1, 1),
+            //             blurRadius: 4),
+            //       ],
+            //       borderRadius: BorderRadius.circular(5)),
+            //   child: Row(
+            //     children: [
+            //       Image.network(
+            //         userProvider.userModel.cart[index]["image"],
+            //         height: 120,
+            //         width: 120,
+            //         fit: BoxFit.cover,
+            //         alignment: Alignment.bottomLeft,
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Text(
+            //               userProvider.userModel.cart[index]["name"],
+            //               style: TextStyle(
+            //                 fontSize: 20,
+            //               ),
+            //             ),
+            //             Text(
+            //                 userProvider.userModel.cart[index]["amount"]
+            //                     .toString(),
+            //                 style: TextStyle(
+            //                     fontSize: 18, fontWeight: FontWeight.bold)),
+            //             Text(
+            //                 userProvider.userModel.cart[index]["quantity"]
+            //                     .toString(),
+            //                 style: TextStyle(
+            //                     fontSize: 18, fontWeight: FontWeight.bold))
+            //           ],
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 80,
+            //       ),
+            //       IconButton(
+            //           icon: Icon(EvaIcons.trash),
+            //           onPressed: () async {
+            //             appProvider.changeLoadingState();
+            //             bool value = await userProvider.removeFromCart(
+            //                 cartItem: userProvider.userModel.cart[index]);
+            //             if (value) {
+            //               userProvider.getUser();
+            //               Scaffold.of(context).showSnackBar(SnackBar(
+            //                   content: Text(
+            //                       "${userProvider.userModel.cart[index]["name"]} removed from cart")));
+
+            //               appProvider.changeLoadingState();
+            //               return;
+            //             } else {
+            //               Scaffold.of(context).showSnackBar(SnackBar(
+            //                   content: Text(
+            //                       "${userProvider.userModel.cart[index]["name"]} not removed")));
+            //             }
+            //           })
+            //     ],
+            //   ),
+            // );
           }),
     );
   }

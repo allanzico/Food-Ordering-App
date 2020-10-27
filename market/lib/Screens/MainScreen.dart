@@ -15,8 +15,6 @@ class _MainScreenState extends State<MainScreen> {
   int currentTabIndex = 0;
 
   HomeScreen homeScreen;
-  // CartScreen orderScreen;
-  OrderScreen orderScreen;
   ProfileScreen profileScreen;
   CartScreen cartScreen;
 
@@ -29,11 +27,10 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
 
     homeScreen = HomeScreen();
-    orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
     cartScreen = CartScreen();
 
-    pages = [homeScreen, orderScreen, cartScreen, profileScreen];
+    pages = [homeScreen, cartScreen, profileScreen];
     currentPage = homeScreen;
   }
 
@@ -64,16 +61,6 @@ class _MainScreenState extends State<MainScreen> {
                     color: Colors.black,
                   ),
                   title: Text("Home")),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    EvaIcons.shoppingBagOutline,
-                    color: Colors.black,
-                  ),
-                  activeIcon: Icon(
-                    EvaIcons.shoppingBag,
-                    color: Colors.black,
-                  ),
-                  title: Text("Orders")),
               BottomNavigationBarItem(
                   icon: Icon(
                     EvaIcons.shoppingCartOutline,
