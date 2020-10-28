@@ -45,7 +45,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                   child: Stack(
                 children: [
                   Container(
-                    height: 80,
+                    height: 100,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -61,7 +61,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                       left: 0,
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 10),
-                        height: 80,
+                        height: 100,
                         width: 120,
                         child: Image.network(
                           userProvider.userModel.cart[index]["image"],
@@ -72,8 +72,8 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                     top: 0,
                     right: 0,
                     child: Container(
-                      width: 30,
-                      height: 30,
+                      width: 40,
+                      height: 40,
                       decoration: BoxDecoration(
                           color: Colors.grey[300],
                           borderRadius: BorderRadius.only(
@@ -82,7 +82,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                       child: IconButton(
                           icon: Icon(
                             EvaIcons.trash,
-                            size: 18,
+                            size: 20,
                           ),
                           onPressed: () async {
                             appProvider.changeLoadingState();
@@ -116,7 +116,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                                 child: Text(
                                   userProvider.userModel.cart[index]["name"],
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
@@ -130,14 +130,14 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                               IconButton(
                                   icon: Icon(
                                     EvaIcons.plusCircleOutline,
-                                    size: 18,
+                                    size: 20,
                                   ),
                                   onPressed: () {}),
                               Text(
                                 userProvider.userModel.cart[index]["quantity"]
                                     .toString(),
                                 style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -155,7 +155,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                   ),
                   Positioned(
                     bottom: 5,
-                    right: 0,
+                    right: 5,
                     child: Container(
                       child: Text(
                           "Ugx " +
@@ -163,7 +163,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                                   .toString(),
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                           )),
                     ),
                   )
