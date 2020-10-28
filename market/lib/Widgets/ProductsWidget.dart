@@ -48,13 +48,13 @@ class ProductWidget extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.w600),
+                            fontSize: 18.0, fontWeight: FontWeight.w400),
                       ),
                     ),
                     Text(
                       "Ugx " + product.price.toString(),
                       style: TextStyle(
-                          fontSize: 22.0, fontWeight: FontWeight.w600),
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -68,11 +68,14 @@ class ProductWidget extends StatelessWidget {
                       width: 70,
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Colors.black26,
+                        color: Colors.black45,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       alignment: Alignment.center,
-                      child: Text(product.market),
+                      child: Text(
+                        product.market,
+                        style: TextStyle(color: Colors.white),
+                      ),
                     )
                   ],
                 )

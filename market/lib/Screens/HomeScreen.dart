@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:market/Helpers/ScreenNavigation.dart';
 import 'package:market/Providers/AppProvider.dart';
 import 'package:market/Providers/CategoryProvider.dart';
+import 'package:market/Providers/UserProvider.dart';
 import 'package:market/Providers/MarketProvider.dart';
 import 'package:market/Providers/ProductProvider.dart';
 import 'package:market/Screens/CategoryScreen.dart';
@@ -20,12 +21,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String _selectedItem = "Products";
+
   @override
   Widget build(BuildContext context) {
     final marketProvider = Provider.of<MarketProvider>(context);
     final categoryProvider = Provider.of<CategoryProvider>(context);
     final productProvider = Provider.of<ProductProvider>(context);
     final appProvider = Provider.of<AppProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
+
+    void _selectItem(String name) {
+      Navigator.pop(context);
+      setState(() {
+        _selectedItem = name;
+        if (name == "Products") {
+          appProvider.changeSearchBy(newSearchBy: SearchBy.PRODUCTS);
+        } else {
+          appProvider.changeSearchBy(newSearchBy: SearchBy.MARKETS);
+        }
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: appProvider.isLoading
@@ -36,35 +53,25 @@ class _HomeScreenState extends State<HomeScreen> {
           : SafeArea(
               child: ListView(
                 children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, top: 20),
+                    child: Text(
+                      "Hey " + userProvider.user.email + ",",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 5),
                         child: Text(
                           "Let's order some groceries",
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
                         ),
                       ),
-                      Stack(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.notifications_none),
-                            onPressed: () {},
-                          ),
-                          Positioned(
-                            top: 12,
-                            right: 12,
-                            child: Container(
-                              height: 10,
-                              width: 10,
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(20)),
-                            ),
-                          )
-                        ],
-                      )
                     ],
                   ),
                   SizedBox(
@@ -87,6 +94,69 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.search,
                           color: Colors.black,
                         ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.filter_list,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            return showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    color: Colors.black54,
+                                    child: Container(
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Theme.of(context).canvasColor,
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(30),
+                                                topRight: Radius.circular(30))),
+                                        padding:
+                                            EdgeInsets.only(top: 12, right: 10),
+                                        child: Container(
+                                            height: 100.0,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                ListTile(
+                                                  leading: Icon(
+                                                    Icons.fastfood,
+                                                    color: Colors.black,
+                                                  ),
+                                                  title: Text('Products'),
+                                                  onTap: () {
+                                                    _selectItem("Products");
+                                                  },
+                                                ),
+                                                Divider(
+                                                  height: 1,
+                                                  indent: 25,
+                                                  endIndent: 25,
+                                                ),
+                                                ListTile(
+                                                  leading: Icon(
+                                                    Icons.store_mall_directory,
+                                                    color: Colors.black,
+                                                  ),
+                                                  title: Text('Markets'),
+                                                  onTap: () {
+                                                    _selectItem("Markets");
+                                                  },
+                                                ),
+                                                Divider(
+                                                  height: 1,
+                                                  indent: 25,
+                                                  endIndent: 25,
+                                                ),
+                                              ],
+                                            ))),
+                                  );
+                                });
+                          },
+                        ),
                         title: TextField(
                           textInputAction: TextInputAction.search,
                           onSubmitted: (pattern) async {
@@ -104,58 +174,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             appProvider.changeLoadingState();
                           },
                           decoration: InputDecoration(
-                              hintText: "Search groceries and markets",
+                              hintText: _selectedItem == "Products"
+                                  ? "Search Products"
+                                  : "Search Markets",
                               border: InputBorder.none),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Search by: ",
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: appProvider.filterBy,
-                            isDense: true,
-                            autofocus: true,
-                            style: TextStyle(fontSize: 18, color: Colors.black),
-                            items: <String>["Products", "Markets"]
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem(
-                                  value: value, child: Text(value));
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                if (value == "Products") {
-                                  appProvider.changeSearchBy(
-                                      newSearchBy: SearchBy.PRODUCTS);
-                                } else {
-                                  appProvider.changeSearchBy(
-                                      newSearchBy: SearchBy.MARKETS);
-                                }
-                              });
-                            },
-                            elevation: 0,
-                            icon: Icon(
-                              Icons.filter_list,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                   Divider(
                     height: 30,
@@ -163,16 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     indent: 8,
                     endIndent: 8,
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Padding(
-                  //       padding: const EdgeInsets.all(8.0),
-                  //       child: Text("Categories",
-                  //           style: TextStyle(fontSize: 18, color: Colors.grey)),
-                  //     ),
-                  //   ],
-                  // ),
                   Container(
                     height: 75,
                     child: ListView.builder(
