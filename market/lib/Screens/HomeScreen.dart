@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:market/Helpers/ScreenNavigation.dart';
 import 'package:market/Providers/AppProvider.dart';
@@ -5,6 +6,7 @@ import 'package:market/Providers/CategoryProvider.dart';
 import 'package:market/Providers/UserProvider.dart';
 import 'package:market/Providers/MarketProvider.dart';
 import 'package:market/Providers/ProductProvider.dart';
+import 'package:market/Screens/CartScreen.dart';
 import 'package:market/Screens/CategoryScreen.dart';
 import 'package:market/Screens/MarketScreen.dart';
 import 'package:market/Screens/MarketSearchScreen.dart';
@@ -53,13 +55,51 @@ class _HomeScreenState extends State<HomeScreen> {
           : SafeArea(
               child: ListView(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8, top: 20),
-                    child: Text(
-                      "Hey " + userProvider.user.email + ",",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, top: 20),
+                        child: Text(
+                          "Hey " + userProvider.user.email + ",",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Stack(
+                        children: [
+                          IconButton(
+                              icon: Icon(
+                                EvaIcons.shoppingBag,
+                                color: Colors.black,
+                                size: 24,
+                              ),
+                              onPressed: () {
+                                changeScreen(context, CartScreen());
+                              }),
+                          Positioned(
+                            bottom: 8,
+                            right: 10,
+                            child: Container(
+                              height: 15,
+                              width: 15,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Center(
+                                child: Text(
+                                    userProvider.userModel.cart.length
+                                        .toString(),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
