@@ -142,6 +142,17 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+  Future<bool> emptyCart() async {
+    try {
+      _userServices.emptyCart(userId: user.uid);
+
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
 //Clear text fields
   void clearControllers() {
     email.text = "";

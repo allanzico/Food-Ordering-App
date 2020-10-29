@@ -43,6 +43,15 @@ class UserService {
     });
   }
 
+//Empty entire cart
+
+  void emptyCart({String userId}) {
+    _firestore
+        .collection(collection)
+        .document(userId)
+        .updateData({"cart": FieldValue.delete()});
+  }
+
   //Get single user
   Future<UserModel> getUserById(String id) {
     return _firestore.collection(collection).document(id).get().then((doc) {

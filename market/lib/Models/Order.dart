@@ -33,7 +33,7 @@ class OrderModel {
     _id = snapshot.data[ID];
     _userId = snapshot.data[USER_ID];
     _description = snapshot.data[DESCRIPTION];
-    cart = snapshot.data[CART];
+    cart = snapshot.data[CART] ?? [];
     _totalPrice = snapshot.data[TOTAL_PRICE];
     _status = snapshot.data[STATUS];
     _createdAt = snapshot.data[CREATED_AT];

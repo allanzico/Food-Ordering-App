@@ -38,37 +38,6 @@ class _CartScreenState extends State<CartScreen> {
               fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        actions: <Widget>[
-          Stack(
-            children: [
-              IconButton(
-                  icon: Icon(
-                    EvaIcons.shoppingBag,
-                    color: Colors.black,
-                    size: 35,
-                  ),
-                  onPressed: null),
-              Positioned(
-                bottom: 8,
-                right: 5,
-                child: Container(
-                  height: 15,
-                  width: 15,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                    child: Text(userProvider.userModel.cart.length.toString(),
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
       ),
       backgroundColor: Colors.white,
       body: userProvider.userModel.cart == null
@@ -140,18 +109,17 @@ class _CartScreenState extends State<CartScreen> {
                                 totalPrice:
                                     userProvider.userModel.totalCartPrice,
                                 cart: userProvider.userModel.cart);
-                            for (Map cartItem in userProvider.userModel.cart) {
+
+                            appProvider.changeLoadingState();
+                            bool value = await userProvider.emptyCart();
+                            if (value) {
+                              userProvider.getUser();
+                              _key.currentState.showSnackBar(
+                                  SnackBar(content: Text("ORDER CREATED")));
                               appProvider.changeLoadingState();
-                              bool value = await userProvider.removeFromCart(
-                                  cartItem: cartItem);
-                              if (value) {
-                                userProvider.getUser();
-                                _key.currentState.showSnackBar(
-                                    SnackBar(content: Text("ORDER CREATED")));
-                                appProvider.changeLoadingState();
-                                return;
-                              }
+                              return;
                             }
+
                             Navigator.of(context).pop();
                             _key.currentState.showSnackBar(
                                 SnackBar(content: Text("ORDER CREATED")));

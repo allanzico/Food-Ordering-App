@@ -27,127 +27,237 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
       key: _key,
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        actions: <Widget>[
-          Stack(
-            children: [
-              IconButton(
-                  icon: Icon(
-                    EvaIcons.shoppingBag,
-                    color: Colors.black,
-                    size: 35,
-                  ),
-                  onPressed: () {
-                    changeScreen(context, CartScreen());
-                  }),
-              Positioned(
-                bottom: 8,
-                right: 5,
-                child: Container(
-                  height: 15,
-                  width: 15,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                    child: Text(userProvider.userModel.cart.length.toString(),
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: SafeArea(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      //   leading: IconButton(
+      //       icon: Icon(
+      //         Icons.arrow_back,
+      //         color: Colors.black,
+      //       ),
+      //       onPressed: () {
+      //         Navigator.pop(context);
+      //       }),
+      //   actions: <Widget>[
+      //     Stack(
+      //       children: [
+      //         IconButton(
+      //             icon: Icon(
+      //               EvaIcons.shoppingBag,
+      //               color: Colors.black,
+      //               size: 35,
+      //             ),
+      //             onPressed: () {
+      //               changeScreen(context, CartScreen());
+      //             }),
+      //         Positioned(
+      //           bottom: 8,
+      //           right: 5,
+      //           child: Container(
+      //             height: 15,
+      //             width: 15,
+      //             decoration: BoxDecoration(
+      //                 color: Colors.white,
+      //                 borderRadius: BorderRadius.circular(30)),
+      //             child: Center(
+      //               child: Text(userProvider.userModel.cart.length.toString(),
+      //                   style: TextStyle(
+      //                       color: Colors.black,
+      //                       fontSize: 10,
+      //                       fontWeight: FontWeight.bold)),
+      //             ),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ],
+      // ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              child: Image(image: NetworkImage(widget.product.image)),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.product.name,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ",
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Stack(
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                        icon: Icon(
-                          EvaIcons.plusCircleOutline,
-                          size: 32,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            quantity += 1;
-                          });
-                        }),
-                    Text(
-                      quantity.toString(),
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold),
+                Container(
+                  height: MediaQuery.of(context).size.width - 20,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black26,
+                            offset: Offset(0.0, 2.0),
+                            blurRadius: 6.0)
+                      ]),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Image(
+                      image: NetworkImage(widget.product.image),
+                      fit: BoxFit.cover,
                     ),
-                    IconButton(
-                        icon: Icon(
-                          EvaIcons.minusCircleOutline,
-                          size: 32,
-                        ),
-                        onPressed: () {
-                          if (quantity != 1) {
-                            setState(() {
-                              quantity -= 1;
-                            });
-                          }
-                        }),
-                  ],
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "UGX " + (widget.product.price * quantity).toString(),
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.arrow_back),
+                          iconSize: 30,
+                          color: Colors.black,
+                          onPressed: () => Navigator.pop(context)),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Stack(
+                          children: [
+                            IconButton(
+                                icon: Icon(
+                                  EvaIcons.shoppingBag,
+                                  color: Colors.black,
+                                  size: 25,
+                                ),
+                                onPressed: () {
+                                  changeScreen(context, CartScreen());
+                                }),
+                            Positioned(
+                              bottom: 8,
+                              right: 5,
+                              child: Container(
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Center(
+                                  child: Text(
+                                      userProvider.userModel.cart.length
+                                          .toString(),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 ),
+                Positioned(
+                  left: 20,
+                  bottom: 20,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                        decoration: BoxDecoration(
+                            color: Colors.black45,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20),
+                                bottomLeft: Radius.circular(20))),
+                        child: Text(
+                          widget.product.name,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 32,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2),
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ],
         ),
       ),
+      // body: SafeArea(
+      //   child: Column(
+      //     children: [
+      //       Container(
+      //         child: Image(image: NetworkImage(widget.product.image)),
+      //       ),
+      //       Container(
+      //         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.center,
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: [
+      //             Text(
+      //               widget.product.name,
+      //               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      //             ),
+      //             SizedBox(height: 5),
+      //             Text(
+      //               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ",
+      //               style: TextStyle(fontSize: 14, color: Colors.grey),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //       SizedBox(
+      //         height: 15,
+      //       ),
+      //       Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           Row(
+      //             children: [
+      //               IconButton(
+      //                   icon: Icon(
+      //                     EvaIcons.plusCircleOutline,
+      //                     size: 32,
+      //                   ),
+      //                   onPressed: () {
+      //                     setState(() {
+      //                       quantity += 1;
+      //                     });
+      //                   }),
+      //               Text(
+      //                 quantity.toString(),
+      //                 style: TextStyle(
+      //                     fontSize: 20,
+      //                     color: Colors.grey,
+      //                     fontWeight: FontWeight.bold),
+      //               ),
+      //               IconButton(
+      //                   icon: Icon(
+      //                     EvaIcons.minusCircleOutline,
+      //                     size: 32,
+      //                   ),
+      //                   onPressed: () {
+      //                     if (quantity != 1) {
+      //                       setState(() {
+      //                         quantity -= 1;
+      //                       });
+      //                     }
+      //                   }),
+      //             ],
+      //           ),
+      //           Padding(
+      //             padding: const EdgeInsets.all(10.0),
+      //             child: Text(
+      //               "UGX " + (widget.product.price * quantity).toString(),
+      //               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ],
+      //   ),
+      // ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
