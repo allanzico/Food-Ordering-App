@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8, top: 20),
                         child: Text(
-                          "Hey " + userProvider.user.email + ",",
+                          "Hey " + userProvider.userModel.firstName + ",",
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.w600),
                         ),
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           IconButton(
                               icon: Icon(
-                                EvaIcons.shoppingBagOutline,
+                                Icons.shopping_cart,
                                 color: Colors.black,
                                 size: 24,
                               ),

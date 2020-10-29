@@ -27,14 +27,13 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
       key: _key,
       backgroundColor: Colors.white,
-
       body: SingleChildScrollView(
         child: Column(
           children: [
             Stack(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.width - 20,
+                  height: MediaQuery.of(context).size.width - 50,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30.0),
@@ -58,11 +57,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                          icon: Icon(Icons.arrow_back),
-                          iconSize: 30,
-                          color: Colors.black,
-                          onPressed: () => Navigator.pop(context)),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            iconSize: 25,
+                            color: Colors.black,
+                            onPressed: () => Navigator.pop(context)),
+                      ),
                       Container(
                         height: 40,
                         width: 40,
@@ -74,7 +81,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           children: [
                             IconButton(
                                 icon: Icon(
-                                  EvaIcons.shoppingBagOutline,
+                                  Icons.shopping_cart,
                                   color: Colors.black,
                                   size: 25,
                                 ),
@@ -273,82 +280,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           ],
         ),
       ),
-      // body: SafeArea(
-      //   child: Column(
-      //     children: [
-      //       Container(
-      //         child: Image(image: NetworkImage(widget.product.image)),
-      //       ),
-      //       Container(
-      //         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-      //         child: Column(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: [
-      //             Text(
-      //               widget.product.name,
-      //               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      //             ),
-      //             SizedBox(height: 5),
-      //             Text(
-      //               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ",
-      //               style: TextStyle(fontSize: 14, color: Colors.grey),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       SizedBox(
-      //         height: 15,
-      //       ),
-      //       Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: [
-      //           Row(
-      //             children: [
-      //               IconButton(
-      //                   icon: Icon(
-      //                     EvaIcons.plusCircleOutline,
-      //                     size: 32,
-      //                   ),
-      //                   onPressed: () {
-      //                     setState(() {
-      //                       quantity += 1;
-      //                     });
-      //                   }),
-      //               Text(
-      //                 quantity.toString(),
-      //                 style: TextStyle(
-      //                     fontSize: 20,
-      //                     color: Colors.grey,
-      //                     fontWeight: FontWeight.bold),
-      //               ),
-      //               IconButton(
-      //                   icon: Icon(
-      //                     EvaIcons.minusCircleOutline,
-      //                     size: 32,
-      //                   ),
-      //                   onPressed: () {
-      //                     if (quantity != 1) {
-      //                       setState(() {
-      //                         quantity -= 1;
-      //                       });
-      //                     }
-      //                   }),
-      //             ],
-      //           ),
-      //           Padding(
-      //             padding: const EdgeInsets.all(10.0),
-      //             child: Text(
-      //               "UGX " + (widget.product.price * quantity).toString(),
-      //               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ],
-      //   ),
-      // ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

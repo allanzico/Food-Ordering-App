@@ -56,6 +56,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 70,
                         ),
                         TextFormField(
+                            controller: authProvider.firstName,
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.person),
+                                labelText: "First name",
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(2.0),
+                                    borderSide: BorderSide.none)),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'First name is required';
+                              }
+                              return null;
+                            }),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                            controller: authProvider.lastName,
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.person),
+                                labelText: "Last name",
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(2.0),
+                                    borderSide: BorderSide.none)),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Last name is required';
+                              }
+                              return null;
+                            }),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
                             controller: authProvider.email,
                             decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.email),
@@ -102,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: double.infinity,
                           height: 50,
                           child: RaisedButton(
-                            color: Colors.green,
+                            color: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2),
                             ),
@@ -148,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   Text(
                                     "Login",
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: Colors.black,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   )

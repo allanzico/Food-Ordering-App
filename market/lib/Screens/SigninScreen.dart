@@ -103,7 +103,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           width: double.infinity,
                           height: 50,
                           child: RaisedButton(
-                            color: Colors.green,
+                            color: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2),
                             ),

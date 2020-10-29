@@ -35,7 +35,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Allan Akanyijuka",
+                        userProvider.userModel.firstName +
+                            " " +
+                            userProvider.userModel.lastName,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),

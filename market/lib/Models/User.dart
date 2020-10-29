@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:market/Models/OrderItem.dart';
 
 class UserModel {
-  static const NAME = "name";
+  static const FIRST_NAME = "firstName";
+  static const LAST_NAME = "lastName";
   static const EMAIL = "email";
   static const ID = "id";
   // static const FAVORITES = "favorites";
@@ -10,7 +11,8 @@ class UserModel {
   static const CART = "cart";
 
 //Private variables
-  String _name;
+  String _firstName;
+  String _lastName;
   String _email;
   String _id;
   String _stripeId;
@@ -25,7 +27,8 @@ class UserModel {
   // List _favorites;
 
   //getters
-  String get name => _name;
+  String get firstName => _firstName;
+  String get lastName => _lastName;
   String get email => _email;
   String get id => _id;
   String get stripeId => _stripeId;
@@ -33,7 +36,8 @@ class UserModel {
   // List get favorites => _favorites;
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _name = snapshot.data[NAME];
+    _firstName = snapshot.data[FIRST_NAME];
+    _lastName = snapshot.data[LAST_NAME];
     _email = snapshot.data[EMAIL];
     _id = snapshot.data[ID];
     _stripeId = snapshot.data[STRIPE_ID];

@@ -23,7 +23,7 @@ class _OrderScreenState extends State<OrderScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          "Orders",
+          "My Orders",
           style: TextStyle(
               fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -154,7 +154,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     height: 50,
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     width: double.infinity,
-                    color: Colors.grey[50],
+                    color: Colors.grey[100],
                     alignment: Alignment.center,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

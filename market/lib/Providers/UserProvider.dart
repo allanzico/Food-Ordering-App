@@ -34,7 +34,8 @@ class UserProvider with ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  TextEditingController name = TextEditingController();
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
 
 //constructor
   UserProvider.initialize() : _auth = FirebaseAuth.instance {
@@ -79,7 +80,8 @@ class UserProvider with ChangeNotifier {
           .then((user) {
         Map<String, dynamic> userData = {
           "email": email.text,
-          "name": name.text,
+          "firstName": firstName.text,
+          "lastName": lastName.text,
           "id": user.user.uid,
           "favorites": [],
           "cart": []
@@ -101,13 +103,10 @@ class UserProvider with ChangeNotifier {
 
   //Add items to cart
   Future<bool> addToCart({ProductModel product, int quantity}) async {
-    final FirebaseUser firebaseUser = await auth.currentUser();
-    final userId = firebaseUser.uid;
-    _userModel = await _userServices.getUserById(firebaseUser.uid);
     try {
       var uuid = Uuid();
       String cartItemId = uuid.v4();
-      List cart = _userModel.cart;
+
       Map cartItem = {
         "id": cartItemId,
         "name": product.name,
@@ -118,10 +117,7 @@ class UserProvider with ChangeNotifier {
       };
 
       OrderItemModel item = OrderItemModel.fromMap(cartItem);
-      _userServices.addToCart(userId: userId, cartItem: item);
-
-      print("USER: $firebaseUser");
-      print("CART ITEMS ARE: $cart");
+      _userServices.addToCart(userId: user.uid, cartItem: item);
 
       return true;
     } catch (e) {
@@ -142,6 +138,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+//Empty cart after ordering
   Future<bool> emptyCart() async {
     try {
       _userServices.emptyCart(userId: user.uid);
@@ -157,7 +154,8 @@ class UserProvider with ChangeNotifier {
   void clearControllers() {
     email.text = "";
     password.text = "";
-    name.text = "";
+    firstName.text = "";
+    lastName.text = "";
   }
 
   //Auth Error message

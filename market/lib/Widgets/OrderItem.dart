@@ -81,7 +81,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                               bottomLeft: Radius.circular(10))),
                       child: IconButton(
                           icon: Icon(
-                            EvaIcons.trash,
+                            EvaIcons.trash2Outline,
                             size: 20,
                           ),
                           onPressed: () async {

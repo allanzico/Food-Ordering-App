@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:market/Helpers/ScreenNavigation.dart';
 import 'package:market/Models/Category.dart';
 import 'package:market/Providers/ProductProvider.dart';
+import 'package:market/Providers/UserProvider.dart';
+import 'package:market/Screens/CartScreen.dart';
 import 'package:market/Screens/ProductDetails.dart';
 
 import 'package:market/Widgets/ProductsWidget.dart';
@@ -14,6 +16,7 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -43,12 +46,62 @@ class CategoryScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                          icon: Icon(Icons.arrow_back),
-                          iconSize: 30,
-                          color: Colors.black,
-                          onPressed: () => Navigator.pop(context))
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            iconSize: 25,
+                            color: Colors.black,
+                            onPressed: () => Navigator.pop(context)),
+                      ),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Stack(
+                          children: [
+                            IconButton(
+                                icon: Icon(
+                                  Icons.shopping_cart,
+                                  color: Colors.black,
+                                  size: 25,
+                                ),
+                                onPressed: () {
+                                  changeScreen(context, CartScreen());
+                                }),
+                            Positioned(
+                              bottom: 8,
+                              right: 5,
+                              child: Container(
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Center(
+                                  child: Text(
+                                      userProvider.userModel.cart.length
+                                          .toString(),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
