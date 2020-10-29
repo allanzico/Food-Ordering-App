@@ -18,7 +18,7 @@ class MarketService {
 
 //Fetch Markets by ID
   Future<MarketModel> getMarketsById({String mareketId}) async {
-    _firestore
+    return _firestore
         .collection(collection)
         .document(mareketId)
         .get()

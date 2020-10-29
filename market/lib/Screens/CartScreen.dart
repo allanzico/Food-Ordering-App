@@ -1,10 +1,10 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:market/Helpers/OrderService.dart';
-import 'package:market/Models/OrderItem.dart';
 import 'package:market/Providers/AppProvider.dart';
 import 'package:market/Providers/UserProvider.dart';
 import 'package:market/Widgets/OrderItem.dart';
+import 'package:market/Widgets/EmptyCart.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -40,106 +40,113 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
-      body: userProvider.userModel.cart == null
-          ? Text("Nothing")
+      body: userProvider.userModel.cart.length < 1
+          ? EmptyCart(
+              icon: EvaIcons.archiveOutline,
+              title: "Your cart is empty",
+              subTitle: "Check our catalog and order some groceries",
+            )
           : OrderItemWidget(),
-      bottomNavigationBar: Container(
-        height: 70,
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: "Total: ",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w400)),
-                  TextSpan(
-                      text: userProvider.userModel.totalCartPrice == null
-                          ? "0"
-                          : userProvider.userModel.totalCartPrice.toString(),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 22,
-                          fontWeight: FontWeight.normal)),
-                ]),
+      bottomNavigationBar: userProvider.userModel.cart.length < 1
+          ? Text("")
+          : Container(
+              height: 70,
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: "Total: ",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w400)),
+                        TextSpan(
+                            text: userProvider.userModel.totalCartPrice == null
+                                ? "0"
+                                : userProvider.userModel.totalCartPrice
+                                    .toString(),
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.normal)),
+                      ]),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: FlatButton(
+                        child: Text(
+                          "Checkout",
+                          style: TextStyle(fontSize: 22, color: Colors.white),
+                        ),
+                        onPressed: () {
+                          if (userProvider.userModel.totalCartPrice == 0) {
+                            _showDialog(
+                              Text("data"),
+                              Text("Empty cart"),
+                              null,
+                              FlatButton(
+                                child: new Text("Close"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            );
+                          } else {
+                            _showDialog(
+                              Text("data"),
+                              Text(
+                                  "you will be charged ${userProvider.userModel.totalCartPrice}"),
+                              FlatButton(
+                                child: new Text("Accept"),
+                                onPressed: () async {
+                                  var uuid = Uuid();
+                                  String orderId = uuid.v4();
+                                  _orderService.createOrder(
+                                      userId: userProvider.user.uid,
+                                      id: orderId,
+                                      description: "something",
+                                      status: "complete",
+                                      totalPrice:
+                                          userProvider.userModel.totalCartPrice,
+                                      cart: userProvider.userModel.cart);
+
+                                  appProvider.changeLoadingState();
+                                  bool value = await userProvider.emptyCart();
+                                  if (value) {
+                                    userProvider.getUser();
+                                    _key.currentState.showSnackBar(SnackBar(
+                                        content: Text("ORDER CREATED")));
+                                    appProvider.changeLoadingState();
+                                    return;
+                                  }
+
+                                  Navigator.of(context).pop();
+                                  _key.currentState.showSnackBar(
+                                      SnackBar(content: Text("ORDER CREATED")));
+                                },
+                              ),
+                              FlatButton(
+                                child: new Text("Close"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: FlatButton(
-                  child: Text(
-                    "Checkout",
-                    style: TextStyle(fontSize: 22, color: Colors.white),
-                  ),
-                  onPressed: () {
-                    if (userProvider.userModel.totalCartPrice == 0) {
-                      _showDialog(
-                        Text("data"),
-                        Text("Empty cart"),
-                        null,
-                        FlatButton(
-                          child: new Text("Close"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      );
-                    } else {
-                      _showDialog(
-                        Text("data"),
-                        Text(
-                            "you will be charged ${userProvider.userModel.totalCartPrice}"),
-                        FlatButton(
-                          child: new Text("Accept"),
-                          onPressed: () async {
-                            var uuid = Uuid();
-                            String orderId = uuid.v4();
-                            _orderService.createOrder(
-                                userId: userProvider.user.uid,
-                                id: orderId,
-                                description: "something",
-                                status: "complete",
-                                totalPrice:
-                                    userProvider.userModel.totalCartPrice,
-                                cart: userProvider.userModel.cart);
-
-                            appProvider.changeLoadingState();
-                            bool value = await userProvider.emptyCart();
-                            if (value) {
-                              userProvider.getUser();
-                              _key.currentState.showSnackBar(
-                                  SnackBar(content: Text("ORDER CREATED")));
-                              appProvider.changeLoadingState();
-                              return;
-                            }
-
-                            Navigator.of(context).pop();
-                            _key.currentState.showSnackBar(
-                                SnackBar(content: Text("ORDER CREATED")));
-                          },
-                        ),
-                        FlatButton(
-                          child: new Text("Close"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 

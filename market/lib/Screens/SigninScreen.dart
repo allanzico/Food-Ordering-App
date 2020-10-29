@@ -131,7 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         SizedBox(
                           child: FlatButton(
                             onPressed: () {},
-                            hoverColor: Colors.teal,
+                            hoverColor: Colors.black,
                             child: Center(
                               child: Row(
                                 children: <Widget>[
@@ -144,7 +144,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   Text(
                                     "Reset",
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: Colors.black,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   )
@@ -174,7 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   Text(
                                     "Sign up",
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: Colors.black,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   )
