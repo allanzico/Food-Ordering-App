@@ -187,14 +187,6 @@ class _OrderScreenState extends State<OrderScreen> {
                 ],
               ),
             );
-            // return ListTile(
-            //   leading: Text(_order.totalPrice.toString()),
-            //   title: Text(_order.description),
-            //   subtitle: Text(
-            //       DateTime.fromMicrosecondsSinceEpoch(_order.createdAt)
-            //           .toString()),
-            //   trailing: Text(_order.status),
-            // );
           }),
     );
   }

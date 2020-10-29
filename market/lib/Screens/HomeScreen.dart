@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           IconButton(
                               icon: Icon(
-                                EvaIcons.shoppingBag,
+                                EvaIcons.shoppingBagOutline,
                                 color: Colors.black,
                                 size: 24,
                               ),

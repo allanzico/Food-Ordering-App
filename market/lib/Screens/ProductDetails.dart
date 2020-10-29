@@ -27,51 +27,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
       key: _key,
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   leading: IconButton(
-      //       icon: Icon(
-      //         Icons.arrow_back,
-      //         color: Colors.black,
-      //       ),
-      //       onPressed: () {
-      //         Navigator.pop(context);
-      //       }),
-      //   actions: <Widget>[
-      //     Stack(
-      //       children: [
-      //         IconButton(
-      //             icon: Icon(
-      //               EvaIcons.shoppingBag,
-      //               color: Colors.black,
-      //               size: 35,
-      //             ),
-      //             onPressed: () {
-      //               changeScreen(context, CartScreen());
-      //             }),
-      //         Positioned(
-      //           bottom: 8,
-      //           right: 5,
-      //           child: Container(
-      //             height: 15,
-      //             width: 15,
-      //             decoration: BoxDecoration(
-      //                 color: Colors.white,
-      //                 borderRadius: BorderRadius.circular(30)),
-      //             child: Center(
-      //               child: Text(userProvider.userModel.cart.length.toString(),
-      //                   style: TextStyle(
-      //                       color: Colors.black,
-      //                       fontSize: 10,
-      //                       fontWeight: FontWeight.bold)),
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ],
-      // ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -118,7 +74,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           children: [
                             IconButton(
                                 icon: Icon(
-                                  EvaIcons.shoppingBag,
+                                  EvaIcons.shoppingBagOutline,
                                   color: Colors.black,
                                   size: 25,
                                 ),
@@ -179,6 +135,141 @@ class _ProductDetailsState extends State<ProductDetails> {
                 )
               ],
             ),
+            Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 15, left: 15),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Text("Each (1Kg)",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 16)),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width - 30,
+                          child: Flexible(
+                            child: Text(
+                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+                              maxLines: 10,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                                width: 50,
+                                height: 50,
+                                child: Icon(EvaIcons.clockOutline),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10)))),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Delivery Time",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18),
+                                ),
+                                Text("20-30 Min",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey))
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Ugx " + widget.product.price.toString(),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 32)),
+                  Row(
+                    children: [
+                      Container(
+                          width: 32,
+                          height: 32,
+                          alignment: Alignment.center,
+                          child: IconButton(
+                              icon: Icon(
+                                EvaIcons.plus,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  quantity += 1;
+                                });
+                              }),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(8),
+                                  bottomLeft: Radius.circular(8)))),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          quantity.toString(),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                          width: 32,
+                          height: 32,
+                          alignment: Alignment.center,
+                          child: IconButton(
+                              icon: Icon(
+                                EvaIcons.minus,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                if (quantity != 1) {
+                                  setState(() {
+                                    quantity -= 1;
+                                  });
+                                }
+                              }),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(8),
+                                  bottomLeft: Radius.circular(8)))),
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
