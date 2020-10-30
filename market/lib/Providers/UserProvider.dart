@@ -96,6 +96,8 @@ class UserProvider with ChangeNotifier {
 
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
+      _status = Status.Authenticating;
+      notifyListeners();
       AuthResult result = await _auth
           .createUserWithEmailAndPassword(
               email: email.trim(), password: password.trim())

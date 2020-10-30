@@ -17,10 +17,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String firstName = "";
   String lastName = "";
   String error = "";
-  final _key = GlobalKey<ScaffoldState>();
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final _key = GlobalKey<ScaffoldState>();
     final authProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       key: _key,
