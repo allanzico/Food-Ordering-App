@@ -106,6 +106,7 @@ class _CartScreenState extends State<CartScreen> {
                               FlatButton(
                                 child: new Text("Accept"),
                                 onPressed: () async {
+                                  Navigator.of(context).pop();
                                   var uuid = Uuid();
                                   String orderId = uuid.v4();
                                   _orderService.createOrder(
@@ -126,10 +127,6 @@ class _CartScreenState extends State<CartScreen> {
                                     appProvider.changeLoadingState();
                                     return;
                                   }
-
-                                  Navigator.of(context).pop();
-                                  _key.currentState.showSnackBar(
-                                      SnackBar(content: Text("ORDER CREATED")));
                                 },
                               ),
                               FlatButton(

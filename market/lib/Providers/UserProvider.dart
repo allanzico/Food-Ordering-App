@@ -94,6 +94,30 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth
+          .createUserWithEmailAndPassword(
+              email: email.trim(), password: password.trim())
+          .then((user) {
+        Map<String, dynamic> userData = {
+          "email": email,
+          "firstName": firstName.text,
+          "lastName": lastName.text,
+          "id": user.user.uid,
+          "favorites": [],
+          "cart": []
+        };
+        _userServices.createUser(userData);
+      });
+      FirebaseUser user = result.user;
+      return user.uid;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   //User signout
   Future<void> signOut() {
     _auth.signOut();
