@@ -31,7 +31,6 @@ class UserProvider with ChangeNotifier {
 
   FirebaseUser get user => _user;
 
-  final formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController firstName = TextEditingController();
